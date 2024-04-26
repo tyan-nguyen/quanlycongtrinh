@@ -1,0 +1,333 @@
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\PhieuXuatKho */
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<script src="/js/vue.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 22px!important;
+}
+</style>
+
+<div class="phieu-xuat-kho-form">
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2 class="page-header">
+            <i class="fa fa-globe"></i> PHIẾU XUẤT KHO
+            <small class="pull-right">Date: 2/10/2014</small>
+        </h2>
+    </div>
+</div>
+<div class="row">
+	<div class="col-sm-4">Thông tin dự án</div>
+	<div class="col-sm-4">Thông tin duyệt</div>
+	<div class="col-sm-4">Thông tin vận chuyển</div> 
+</div>
+<div class="row">
+	<div class="col-xs-12 table-responsive">
+    	<div class="box">
+    		<div class="box-header">
+    			<h3 class="box-title">CHI TIẾT VẬT TƯ</h3>
+    		</div>
+    		<div class="box-body no-padding">
+            	<table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th>Qty</th>
+                        <th>Product</th>
+                        <th>Serial #</th>
+                        <th>Description</th>
+                        <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Call of Duty</td>
+                            <td>455-981-221</td>
+                            <td>El snort testosterone trophy driving gloves handsome</td>
+                            <td>$64.50</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Need for Speed IV</td>
+                            <td>247-925-726</td>
+                            <td>Wes Anderson umami biodiesel</td>
+                            <td>$50.00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Monsters DVD</td>
+                            <td>735-845-642</td>
+                            <td>Terry Richardson helvetica tousled street art master</td>
+                            <td>$10.70</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Grown Ups Blue Ray</td>
+                            <td>422-568-642</td>
+                            <td>Tousled lomo letterpress</td>
+                            <td>$25.99</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	</div>
+</div>
+
+    <?php $form = ActiveForm::begin(); ?>
+
+	<div class="row">
+		<div class="col-md-6"> <?= $form->field($model, 'id_cong_trinh')->textInput() ?></div>
+		<div class="col-md-6"><?= $form->field($model, 'id_bo_phan_yc')->textInput() ?></div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6"> <?= $form->field($model, 'ly_do')->textInput() ?></div>
+		<div class="col-md-6"></div>
+	</div>
+	
+    <?= $form->field($model, 'thoi_gian_yeu_cau')->textInput() ?>
+
+    <?= $form->field($model, 'id_tai_xe')->textInput() ?>
+
+    <?= $form->field($model, 'id_xe')->textInput() ?>
+
+    <?= $form->field($model, 'nguoi_ky')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'id_nguoi_duyet')->textInput() ?>
+
+    <?= $form->field($model, 'don_gia')->textInput() ?>
+
+    <?= $form->field($model, 'trang_thai')->textInput(['maxlength' => true]) ?>
+
+	<?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        
+	        <?= Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"]) ?>
+	    </div>
+	<?php  } ?>
+
+    <?php ActiveForm::end(); ?>
+    
+    <div class="row">
+    	<div class="col-md-12">
+        	<button type="button" onClick="AddVatTu()">Thêm vật tư</button>
+        	<form id="idForm" method="post" action="/xuatkho/phieu-xuat-kho/save-vat-tu?id=<?= $model->id ?>">
+        	<div id="objDanhSachVatTu">
+        		<table id="vtTable" class="table">
+        			<thead>
+        				<tr>
+        					<td>ID</td>
+        					<td class="td-dongia">Vật tư</td>
+        					<td>Số lượng</td>        					
+        					<td>Số lượng</td>
+        					<td>Đơn giá</td>
+        					<td>Ghi chú</td>
+        					<td></td>
+        				</tr>
+        			</thead>
+            		<tbody>
+            			<tr :id="'tr' + result.id" v-for="(result, indexResult) in results" :key="result.id" >
+            				<td :id="'td' + indexResult">{{ result.id }}</td>
+            				<td>{{ result.tenVatTu }}</td>
+            				<td>{{ result.slyc }}</td>            				
+            				<td>{{ result.soLuong }}</td>
+            				<td>{{ result.donGia }}</td>
+            				<td>{{ result.ghiChu }}</td>
+            				<td>
+            					<span class="lbtn-remove" v-on:click="editVT(indexResult)">Edit</span>
+            					<span class="lbtn-remove" v-on:click="deleteVT(result.id)">Delete</span>
+            				</td>
+            			</tr>
+            		</tbody>
+        		</table>
+        	</div>
+        	</form>
+        	
+    	</div>
+	</div>
+    
+</div>
+
+<script type="text/javascript">
+
+var vue10 = new Vue({
+	el: '#objDanhSachVatTu',
+	data: {
+		results: <?= json_encode($model->dsVatTuYeuCau()) ?>
+	},
+	methods: {
+		editVT: function (indexResult) {
+          //alert('edit' + indexResult);
+          //alert(this.results[indexResult]['id']);
+          //alert(this.results[indexResult]['slyc']);
+          editVatTu(this.results[indexResult]);
+        },
+        deleteVT: function (id) {
+            var result = confirm("Xác nhận xóa vật tư đề nghị khỏi phiếu yêu cầu?");
+            if (result) {
+                //Logic to delete the item
+                //alert('delete' + id);
+                deleteVatTu(id);
+            }          
+        }
+	},
+	computed: {
+	}
+});
+
+function getDataa(){
+    $.ajax({
+      type: 'GET',
+        dataType:"json",
+      url: '/maucua/mau-cua/get-data',
+      success: function (data, status, xhr) {
+        	vue10.results = data.result;
+      }
+    });
+}
+
+function deleteVatTu(id){
+	$.ajax({
+        type: 'post',
+        url: '/xuatkho/phieu-xuat-kho/delete-vat-tu?id=' + id,
+        //data: frm.serialize(),
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);            
+            vue10.results = data.results
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+            console.log(data);
+        },
+    });
+}
+
+function AddVatTu(){
+	var formRow = '<tr id="idTr">';
+	formRow += '<td><input type="text" name="id" /></td>';
+	formRow += '<td><select id="idVatTuAdd" name="idVatTu"></select></td>';
+	formRow += '<td><input type="text" name="slyc" /></td>';	
+	formRow += '<td><input type="text" name="soLuong" /></td>';
+	formRow += '<td><input type="text" name="donGia" /></td>';
+	formRow += '<td><input type="text" name="ghiChu" /></td>';
+	formRow += '<td><input type="submit" name="submit" value="submit" /><span class="lbtn-remove" onClick="remove()">Remove</span> </td>';
+	formRow += '</tr>';
+	//if ($("#vtTable tbody").length <= 0){
+    //	$('#vtTable').append('<tbody></tbody>');
+    //}
+    
+    if($('#idTr').length <= 0){
+    	$('#vtTable tbody').append(formRow);
+    	
+    	//fill dropdown vat tu
+    	fillVatTuDropDown('#idVatTuAdd', '');
+    	
+    	$('#idVatTuAdd').select2({
+          selectOnClose: true
+        });
+    } else {
+    	alert('Vui lòng lưu dữ liệu đang nhập trước!');
+    }
+}
+
+function editVatTu(arr){
+	if ($("#idTrUpdate").length > 0){
+		alert('Bạn đang chỉnh sửa vật tư yêu cầu, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh mất dữ liệu!');
+	} else {
+    	//alert(arr['slyc']);
+    	var formRow = '<tr id="idTrUpdate">';
+    	formRow += '<td><input type="text" name="id" value="' + arr['id'] + '" /></td>';
+    	formRow += '<td><select id="idVatTuEdit" name="idVatTu"></select></td>';
+    	formRow += '<td><input type="text" name="slyc" value="' + arr['slyc'] + '" /></td>';    	
+    	formRow += '<td><input type="text" name="soLuong" value="' + arr['slyc'] + '" /></td>';
+    	formRow += '<td><input type="text" name="donGia" value="' + arr['donGia'] + '" /></td>';
+    	formRow += '<td><input type="text" name="ghiChu" value="' + arr['ghiChu'] + '" /></td>';
+    	formRow += '<td><input type="submit" name="submit" value="submit" /><span class="lbtn-remove" onClick="removeEdit()">Remove</span> </td>';
+    	formRow += '</tr>';
+    	
+    	$('#tr' + arr['id']).hide();
+    	$('#tr' + arr['id']).after(formRow);
+    	//fill dropdown vat tu
+    	fillVatTuDropDown('#idVatTuEdit', arr['idVatTu']);
+    	$('#idVatTuEdit').select2({
+          placeholder: 'Select an option'
+        });
+	}
+}
+
+function removeEdit(){
+	if ($("#idTrUpdate").length > 0){
+		$('#idTrUpdate').prev("tr").show();
+		$('#idTrUpdate').remove();
+	}
+}
+
+function remove(){
+	if ($("#idTr").length > 0){
+		$('#idTr').remove();
+	}
+}
+
+var frm = $('#idForm');
+
+frm.submit(function (e) {
+
+    e.preventDefault();
+
+    $.ajax({
+        type: frm.attr('method'),
+        url: frm.attr('action'),
+        data: frm.serialize(),
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);
+            if(data.type=='create'){
+            	$('#idTr').remove();
+            } else if(data.type == 'update'){
+            	$('#idTrUpdate').remove();
+            	$('#tr' + data.vatTuXuat['id']).show();
+            }
+            vue10.results = data.results
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+            console.log(data);
+        },
+    });
+});
+
+function fillVatTuDropDown(dropdownId, $selected){
+
+    $.ajax({
+        type: 'post',
+        url: '/xuatkho/phieu-xuat-kho/get-list-vat-tu?selected=' + $selected,
+        //data: frm.serialize(),
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);            
+            $(dropdownId).html(data.options);
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+            console.log(data);
+        },
+    });
+}
+
+$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+</script>
+

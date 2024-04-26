@@ -31,6 +31,7 @@ class AdminAssets extends AssetBundle
          'AdminLTE-2.4.12/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
          'AdminLTE-2.4.12/bower_components/bootstrap-daterangepicker/daterangepicker.css',
          'AdminLTE-2.4.12/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+         'AdminLTE-2.4.12/plugins/iCheck/all.css',
          'https://www.responsivefilemanager.com/fancybox/jquery.fancybox-1.3.4.css', 
         
         'css/customadmin.css',
@@ -56,6 +57,7 @@ class AdminAssets extends AssetBundle
          'AdminLTE-2.4.12/bower_components/jquery-slimscroll/jquery.slimscroll.min.js',
          'AdminLTE-2.4.12/bower_components/fastclick/lib/fastclick.js',
          'AdminLTE-2.4.12/dist/js/adminlte.min.js',
+         'AdminLTE-2.4.12/plugins/iCheck/icheck.min.js',
          //'AdminLTE-2.4.12/dist/js/pages/dashboard.js',
          //'AdminLTE-2.4.12/dist/js/demo.js',
          'AdminLTE-2.4.12/dist/js/custom.js',

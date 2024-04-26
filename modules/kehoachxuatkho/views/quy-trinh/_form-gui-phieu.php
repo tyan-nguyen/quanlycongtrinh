@@ -17,7 +17,7 @@ use app\modules\nguoidung\models\PhongBan;
 
 <section class="phieu-xuat-kho-form" style="background-color: white; padding:10px;">
 <?php $form = ActiveForm::begin([
-    'action' => '/xuatkho/quy-trinh/gui-phieu?idPhieu=' . $model->id,
+    'action' => '/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=' . $model->id,
 ]); ?>
 
 <?= $form->errorSummary($model) ?>
@@ -47,7 +47,7 @@ use app\modules\nguoidung\models\PhongBan;
         		<div class="box-body no-padding">
         			<!-- <button type="button" onClick="AddVatTu()">Thêm vật tư</button> -->
         			
-        			<form id="idForm" method="post" action="/xuatkho/phieu-xuat-kho/save-vat-tu?id=<?= $model->id ?>">
+        			<form id="idForm" method="post" action="/kehoachxuatkho/phieu-xuat-kho/save-vat-tu?id=<?= $model->id ?>">
                     	
                     		<table id="vtTable" class="table table-striped">
                     			<thead>
@@ -141,7 +141,7 @@ function getDataa(){
 function deleteVatTu(id){
 	$.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/delete-vat-tu?id=' + id,
+        url: '/kehoachxuatkho/phieu-xuat-kho/delete-vat-tu?id=' + id,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -296,7 +296,7 @@ function fillVatTuDropDown(dropdownId, selected){
 
     $.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-list-vat-tu?selected=' + selected,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-list-vat-tu?selected=' + selected,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -314,7 +314,7 @@ function getVatTuAjax(idvt){
 
     $.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-vat-tu-ajax?idvt=' + idvt,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-vat-tu-ajax?idvt=' + idvt,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -341,7 +341,7 @@ function InPhieuXuatKho(){
 	//load lai phieu in (tranh bi loi khi chinh sua du lieu chua update noi dung in)
 	$.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-phieu-xuat-kho-in-ajax?idPhieu=' + <?= $model->id ?>,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-phieu-xuat-kho-in-ajax?idPhieu=' + <?= $model->id ?>,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');

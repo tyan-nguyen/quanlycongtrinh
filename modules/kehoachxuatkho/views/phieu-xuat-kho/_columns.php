@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use app\widgets\TrangThaiPhieuXuatKhoWidget;
 use kartik\grid\GridView;
-use app\modules\xuatkho\models\PhieuXuatKho;
+use app\modules\kehoachxuatkho\models\PhieuXuatKho;
 use yii\helpers\Html;
 
 return [

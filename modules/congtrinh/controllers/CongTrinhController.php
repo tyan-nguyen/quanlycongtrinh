@@ -14,6 +14,7 @@ use app\modules\congtrinh\models\CongTrinhQuyen;
 use app\modules\xuatkho\models\VatTuBocTach;
 use app\modules\xuatkho\models\search\PhieuXuatKhoSearch;
 use app\modules\xuatkho\models\search\VatTuBocTachSearch;
+use app\modules\kehoachxuatkho\models\search\KeHoachXuatKhoSearch;
 
 /**
  * CongTrinhController implements the CRUD actions for Congtrinh model.
@@ -160,10 +161,13 @@ class CongTrinhController extends Controller
         $dataProvider1 = $searchModel->search(Yii::$app->request->queryParams, $id);
         $searchModel2 = new VatTuBocTachSearch();
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams, $id);
+        $searchModel3 = new KeHoachXuatKhoSearch();
+        $dataProvider3 = $searchModel3->search(Yii::$app->request->queryParams, $id);
         return $this->render('chi-tiet', [
             'model' => $this->findModel($id),
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
+            'dataProvider3' => $dataProvider3,
         ]);
     }
 

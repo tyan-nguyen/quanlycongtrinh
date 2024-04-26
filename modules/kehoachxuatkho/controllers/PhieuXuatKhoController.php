@@ -1,20 +1,19 @@
 <?php
 
-namespace app\modules\xuatkho\controllers;
+namespace app\modules\kehoachxuatkho\controllers;
 
 use Yii;
-use app\modules\xuatkho\models\PhieuXuatKho;
-use app\modules\xuatkho\models\search\PhieuXuatKhoSearch;
+use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
-use app\modules\xuatkho\models\VatTuXuat;
+use app\modules\kehoachxuatkho\models\VatTuKeHoach;
 use app\modules\vattu\models\LoaiVatTu;
 use app\modules\vattu\models\VatTu;
 use app\modules\congtrinh\models\CongTrinh;
-use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
+use app\modules\kehoachxuatkho\models\search\KeHoachXuatKhoSearch;
 
 /**
  * Default controller for the `xuatkho` module
@@ -84,11 +83,11 @@ class PhieuXuatKhoController extends Controller
     
     public function actionSaveVatTu($id){
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $phieu = PhieuXuatKho::findOne($id);
+        $phieu = KeHoachXuatKho::findOne($id);
         if($phieu != null){
             if(isset($_POST['id']) && $_POST['id'] != null){
                 //update
-                $model= VatTuXuat::findOne($_POST['id']);
+                $model= VatTuKeHoach::findOne($_POST['id']);
                 $model->trang_thai = 'MOI';
                 if(isset($_POST['slyc']))
                     $model->so_luong_yeu_cau = $_POST['slyc'];
@@ -118,7 +117,7 @@ class PhieuXuatKhoController extends Controller
                 }
             } else {
                 //check vat tu da co trong phieu xuat chua
-                $vatTu = VatTuXuat::find()->where([
+                $vatTu = VatTuKeHoach::find()->where([
                     'id_phieu_xuat_kho' => $id,
                     'id_vat_tu' => $_POST['idVatTu'],
                 ])->one();
@@ -129,7 +128,7 @@ class PhieuXuatKhoController extends Controller
                     ];
                 } else {
                     //create
-                    $model = new VatTuXuat();
+                    $model = new VatTuKeHoach();
                     $model->id_phieu_xuat_kho = $id;
                     $model->so_luong_yeu_cau = $_POST['slyc'];
                     $model->id_vat_tu = $_POST['idVatTu'];
@@ -162,11 +161,11 @@ class PhieuXuatKhoController extends Controller
     
     public function actionDeleteVatTu($id){
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $vatTu = VatTuXuat::findOne($id);
+        $vatTu = VatTuKeHoach::findOne($id);
         if($vatTu != null){
             $phieuId = $vatTu->id_phieu_xuat_kho;
             if($vatTu->delete()){
-                $phieu = PhieuXuatKho::findOne($phieuId);
+                $phieu = KeHoachXuatKho::findOne($phieuId);
                 return [
                     'type'=>'delete',
                     'status'=>'success',
@@ -189,7 +188,7 @@ class PhieuXuatKhoController extends Controller
      */
     public function actionIndex()
     {    
-        $searchModel = new PhieuXuatKhoSearch();
+        $searchModel = new KeHoachXuatKhoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -204,7 +203,7 @@ class PhieuXuatKhoController extends Controller
      */
     public function actionPhieuDuyet()
     {
-        $searchModel = new PhieuXuatKhoSearch();
+        $searchModel = new KeHoachXuatKhoSearch();
         $dataProvider = $searchModel->searchPhieuDuyet(Yii::$app->request->queryParams);
         
         return $this->render('index-phieu-duyet', [
@@ -217,32 +216,13 @@ class PhieuXuatKhoController extends Controller
      * Lists all PhieuXuatKho models.
      * @return mixed
      */
-    public function actionPhieuXuatCongTrinh($id)
-    {
-        $searchModel = new PhieuXuatKhoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
-        $model = CongTrinh::findOne($id);
-        if($model !=null){        
-            return $this->render('index-cong-trinh', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'model' => $model
-            ]);
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-        }
-    }
-    
-    /**
-     * Lists all PhieuXuatKho models.
-     * @return mixed
-     */
     public function actionPhieuXuatKeHoach($id)
     {
-        $searchModel = new PhieuXuatKhoSearch();
-        $dataProvider = $searchModel->searchKeHoach(Yii::$app->request->queryParams, $id);
-        $model = KeHoachXuatKho::findOne($id);
-        if($model !=null){
+        $searchModel = new KeHoachXuatKhoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+
+        $model = CongTrinh::findOne($id);
+        if($model !=null){        
             return $this->render('index-ke-hoach', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -260,7 +240,7 @@ class PhieuXuatKhoController extends Controller
     public function actionGetPhieuXuatKhoInAjax($idPhieu)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = PhieuXuatKho::findOne($idPhieu);
+        $model = KeHoachXuatKho::findOne($idPhieu);
         if($model !=null){
             return [
                'status'=>'success',
@@ -316,12 +296,12 @@ class PhieuXuatKhoController extends Controller
         if($modelCongTrinh == null){
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         } else {
-            $model = new PhieuXuatKho();
+            $model = new KeHoachXuatKho();
             $model->id_cong_trinh = $idct;
             if($model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -528,12 +508,12 @@ class PhieuXuatKhoController extends Controller
      * Finds the PhieuXuatKho model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PhieuXuatKho the loaded model
+     * @return KeHoachXuatKho the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PhieuXuatKho::findOne($id)) !== null) {
+        if (($model = KeHoachXuatKho::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\xuatkho\models;
+namespace app\modules\kehoachxuatkho\models;
 
 use Yii;
-use app\modules\xuatkho\models\base\PhieuXuatKhoBase;
+use app\modules\kehoachxuatkho\models\base\KeHoachXuatKhoBase;
 use app\modules\vanchuyen\taixe\models\TaiXe;
 use app\modules\vanchuyen\xe\models\Xe;
 use app\modules\nguoidung\models\PhongBan;
@@ -11,9 +11,9 @@ use app\modules\nguoidung\models\NguoiDung;
 use app\custom\CustomFunc;
 use app\modules\congtrinh\models\CongTrinh;
 
-class PhieuXuatKho extends PhieuXuatKhoBase
+class KeHoachXuatKho extends KeHoachXuatKhoBase
 {
-    /** -------xu ly cho so phieu */
+    /** -------xu ly cho so ke hoach */
     public function getDaDuyet(){
         if($this->trang_thai=='DA_DUYET'||$this->trang_thai=='KHONG_DUYET'||$this->trang_thai=='DA_GIAO_HANG')
             return true;
@@ -22,9 +22,9 @@ class PhieuXuatKho extends PhieuXuatKhoBase
     }
     public function getSoPhieu(){
         if($this->so_phieu != null){
-            return 'P' . $this->fillNumber($this->so_phieu) . '/' . $this->namCuaPhieu;
+            return 'KH' . $this->fillNumber($this->so_phieu) . '/' . $this->namCuaPhieu;
         } else {
-            return 'N' . $this->fillNumber($this->getSoPhieuCuoi($this->nam) + 1) . '/' . $this->namCuaPhieu;
+            return 'KHN' . $this->fillNumber($this->getSoPhieuCuoi($this->nam) + 1) . '/' . $this->namCuaPhieu;
         }
     }    
     public function getSoPhieuCuoi($year=NULl){
@@ -52,9 +52,9 @@ class PhieuXuatKho extends PhieuXuatKhoBase
     }
     public function fillNumber($number){
         $num = strlen($number);
-        if( $num < 5){
+        if( $num < 3){
             $str0 = '';
-            for($i=1;$i<=(5-$num); $i++){
+            for($i=1;$i<=(3-$num); $i++){
                 $str0 .= '0';
             }
             return $str0 . $number;
@@ -65,7 +65,7 @@ class PhieuXuatKho extends PhieuXuatKhoBase
     /** //-------end xu ly cho so phieu */
     
     public function getVatTuXuat(){
-        return $this->hasMany(VatTuXuat::class, ['id_phieu_xuat_kho' => 'id']);
+        return $this->hasMany(VatTuKeHoach::class, ['id_phieu_xuat_kho' => 'id']);
     }
     
     public function getTongTien(){
@@ -234,15 +234,5 @@ class PhieuXuatKho extends PhieuXuatKhoBase
     {
         return $this->hasOne(CongTrinh::class, ['id' => 'id_cong_trinh']);
     }
-    /**
-     * Gets query for [[KeHoach]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    /* public function getKeHoach()
-    {
-        //sua doi ten lai ka KeHoachXuatKho sau...
-        return $this->hasOne(\app\modules\kehoachxuatkho\models\PhieuXuatKho::class, ['id' => 'id_ke_hoach']);
-    } */
   
 }

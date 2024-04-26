@@ -17,20 +17,14 @@ use app\modules\nguoidung\models\PhongBan;
 
 <section class="phieu-xuat-kho-form" style="background-color: white; padding:10px;">
 <?php $form = ActiveForm::begin([
-    'action' => '/xuatkho/quy-trinh/gui-phieu?idPhieu=' . $model->id,
+    'action' => '/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=' . $model->id,
 ]); ?>
 
 <?= $form->errorSummary($model) ?>
 
 <div class="row">
 	<div class="col-sm-5">
-	 	<?= $form->field($model, 'ly_do')->textarea(['rows'=>3]) ?>
-	</div>
-	<div class="col-sm-5">
-	 	<?= $form->field($model, 'y_kien_nguoi_gui')->textarea(['rows'=>3]) ?>
-	</div>
-	<div class="col-sm-2">
-		<?= $form->field($model, 'id_bo_phan_yc')->dropDownList(PhongBan::getDanhSachPhongBan(), ['prompt'=>'-Chọn bộ phận-']) ?>
+	 	<?= $form->field($model, 'y_kien_nguoi_duyet')->textarea(['rows'=>3]) ?>
 	</div>
 
 </div>
@@ -47,7 +41,7 @@ use app\modules\nguoidung\models\PhongBan;
         		<div class="box-body no-padding">
         			<!-- <button type="button" onClick="AddVatTu()">Thêm vật tư</button> -->
         			
-        			<form id="idForm" method="post" action="/xuatkho/phieu-xuat-kho/save-vat-tu?id=<?= $model->id ?>">
+        			<form id="idForm" method="post" action="/kehoachxuatkho/phieu-xuat-kho/save-vat-tu?id=<?= $model->id ?>">
                     	
                     		<table id="vtTable" class="table table-striped">
                     			<thead>
@@ -57,10 +51,12 @@ use app\modules\nguoidung\models\PhongBan;
                     					<th style="width:15%">Vật tư</th>
                     					<th style="width:10%">ĐVT</th>        					
                     					<th style="width:10%">Số lượng</th>
+                    					<th style="width:10%">Số lượng duyệt</th>
                     					<th style="width:10%">Đơn giá(VND)</th>
                     					<th style="width:10%">Thành tiền(VND)</th>
+                    					<th style="width:10%">Thành tiền duyệt(VND)</th>
                     					<!-- <th style="width:10%">Ghi chú</th>-->
-                    					<!-- <th style="width:15%"></th> -->
+                    					<th style="width:15%"></th>
                     				</tr>
                     			</thead>
                         		<tbody>
@@ -69,22 +65,30 @@ use app\modules\nguoidung\models\PhongBan;
                         				<td>{{ result.tenLoaiVatTu }}</td>
                         				<td>{{ result.tenVatTu }}</td>
                         				<td>{{ result.dvt }}</td>
-                        				<td>{{ result.slyc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>            
+                        				<td>{{ result.slyc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>  
+                        				<td>{{ result.sldd==null? 0 : result.sldd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>            
                         				<td>{{ result.donGia.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
                         				<td>{{ result.thanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
+                        				<td>{{ result.thanhTienDuocDuyet.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</td>
                         				<!-- <td>{{ result.ghiChu }}</td> -->
                         				<td>
-                        					<!-- <span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult)"><i class="fa fa-edit"></i> Sửa</span>
-                        					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="deleteVT(result.id)"><i class="fa fa-trash"></i> Xóa</span> -->
+                        					<!-- <span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult)"><i class="fa fa-edit"></i> Duyệt</span>-->
                         					<span class="lbtn-remove btn btn-primary btn-xs">{{ result.hanMuc + ' (' + result.hanMucPhanTram + '%)'}}</span>
                         				</td>
                         			</tr>
                         		</tbody>
                         		 <tfoot>
                                     <tr>
-                                      	<th colspan="5"></th>
-                    					<th>Tổng cộng</th>
-                    					<th><span style="font-weight:bold">{{ results.tongTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (VND)</span></th>
+                                      	<!-- <th colspan="5"></th> -->
+                    					<th colspan="7" style="text-align:right">Tổng cộng (theo yêu cầu)</th>
+                    					<th colspan="2"><span style="font-weight:bold">{{ results.tongTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (VND)</span></th>
+                    					<!-- <th style="width:10%">Ghi chú</th>-->
+                                    </tr>
+                                    <tr>
+                                      	<!-- <th colspan="5"></th> -->
+                    					<th colspan="7" style="text-align:right">Tổng cộng (được duyệt)</th>
+                    					<th></th>
+                    					<th colspan="2"><span style="font-weight:bold">{{ results.tongTienDuocDuyet.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }} (VND)</span></th>
                     					<!-- <th style="width:10%">Ghi chú</th>-->
                                     </tr>
                                   </tfoot>
@@ -141,7 +145,7 @@ function getDataa(){
 function deleteVatTu(id){
 	$.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/delete-vat-tu?id=' + id,
+        url: '/kehoachxuatkho/phieu-xuat-kho/delete-vat-tu?id=' + id,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -159,54 +163,6 @@ function deleteVatTu(id){
     });
 }
 
-function AddVatTu(){
-	var formRow = '<tr id="idTr">';
-	formRow += '<td>STT</td>';
-	formRow += '<td><span id="loaiVatTuNew">Loại vật tư</span></td>';
-	formRow += '<td><select id="idVatTuAdd" name="idVatTu" required></select></td>';
-	formRow += '<td><span id="donViTinhNew">Đơn vị tính</span></td>';
-	formRow += '<td><input type="text" name="slyc" id="slycNew" required/></td>';	
-	formRow += '<td><input type="text" name="donGia" id="donGiaNew" required/></td>';
-	formRow += '<td><span id="thanhTienNew">Thành tiền</span></td>';
-	//formRow += '<td><input type="text" name="ghiChu" /></td>';
-	formRow += '<td><input type="submit" name="submit" value="Lưu" class="btn btn-default btn-xs" style="width:50px" /> <span class="lbtn-remove btn btn-default btn-xs" onClick="remove()">Bỏ qua</span> </td>';
-	formRow += '</tr>';
-	//if ($("#vtTable tbody").length <= 0){
-    //	$('#vtTable').append('<tbody></tbody>');
-    //}
-    
-    if($('#idTr').length <= 0){
-    	$('#vtTable tbody').append(formRow);
-    	
-    	//fill dropdown vat tu
-    	fillVatTuDropDown('#idVatTuAdd', '');
-    	
-    	$('#idVatTuAdd').select2({
-          selectOnClose: true,
-          width: '100%'
-        });
-        $('#idVatTuAdd').on("select2:select", function(e) { 
-           //alert(this.value);
-           getVatTuAjax(this.value);
-        });
-        //focus and open select 2
-       // $('#idVatTuAdd').select2('focus');
-       // $('#idVatTuAdd').select2('open');
-        
-        
-        $("#slycNew").on("input", function() {
-          // alert($(this).val()); 
-           $('#thanhTienNew').text(($(this).val()*$('#donGiaNew').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
-        $("#donGiaNew").on("input", function() {
-           //alert($(this).val()); 
-           $('#thanhTienNew').text(($(this).val()*$('#slycNew').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
-    } else {
-    	alert('Vui lòng lưu dữ liệu đang nhập trước!');
-    }
-}
-
 function editVatTu(arr){
 	if ($("#idTrUpdate").length > 0){
 		alert('Bạn đang chỉnh sửa vật tư yêu cầu, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh mất dữ liệu!');
@@ -218,9 +174,11 @@ function editVatTu(arr){
     	formRow += '<td>'+ arr['tenVatTu'] +'</td>';
     	//formRow += '<td><select id="idVatTuEdit" name="idVatTu"></select></td>';
     	formRow += '<td>'+ arr['dvt'] +'</td>';
-    	formRow += '<td><input type="text" name="slyc" value="' + arr['slyc'] + '" id="slycEdit" required /></td>';    	
-    	formRow += '<td><input type="text" name="donGia" value="' + arr['donGia'] + '" id="donGiaEdit" required /></td>';
+    	formRow += '<td>'+ arr['slyc'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</td>';
+    	formRow += '<td><input type="text" name="sldd" value="' + (arr['sldd']==null?0:arr['sldd']) + '" id="slddEdit" required /></td>';    	
+    	formRow += '<td>'+ arr['donGia'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +'</td>';
     	formRow += '<td><span id="thanhTienEdit">'+ arr['thanhTien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +' </span></td>';
+    	formRow += '<td><span id="thanhTienEdit">'+ arr['thanhTienDuocDuyet'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +' </span></td>';
     	//formRow += '<td><input type="text" name="ghiChu" value="' + arr['ghiChu'] + '" /></td>';
     	formRow += '<td><input class="btn btn-default btn-xs" type="submit" name="submit" value="Lưu" style="width:50px" /> <span class="lbtn-remove btn btn-default btn-xs" onClick="removeEdit()">Bỏ qua</span> </td>';
     	formRow += '</tr>';
@@ -296,7 +254,7 @@ function fillVatTuDropDown(dropdownId, selected){
 
     $.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-list-vat-tu?selected=' + selected,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-list-vat-tu?selected=' + selected,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -314,7 +272,7 @@ function getVatTuAjax(idvt){
 
     $.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-vat-tu-ajax?idvt=' + idvt,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-vat-tu-ajax?idvt=' + idvt,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
@@ -341,7 +299,7 @@ function InPhieuXuatKho(){
 	//load lai phieu in (tranh bi loi khi chinh sua du lieu chua update noi dung in)
 	$.ajax({
         type: 'post',
-        url: '/xuatkho/phieu-xuat-kho/get-phieu-xuat-kho-in-ajax?idPhieu=' + <?= $model->id ?>,
+        url: '/kehoachxuatkho/phieu-xuat-kho/get-phieu-xuat-kho-in-ajax?idPhieu=' + <?= $model->id ?>,
         //data: frm.serialize(),
         success: function (data) {
             console.log('Submission was successful.');

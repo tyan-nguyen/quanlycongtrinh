@@ -332,10 +332,6 @@ $this->registerJs($script);
 
 <?php $this->endBody() ?>
 
-<script>
-
-</script>
-
 </body>
 </html>
 <?php $this->endPage() ?>

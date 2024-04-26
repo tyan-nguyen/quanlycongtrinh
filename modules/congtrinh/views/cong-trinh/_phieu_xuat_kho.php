@@ -118,8 +118,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
     </div>
     
     <div class="box-footer clearfix">
-    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Duyệt phiếu xuất kho</a> -->
-    <a href="/xuatkho/phieu-xuat-kho/phieu-xuat-cong-trinh?id=<?= $model->id ?>" class="btn btn-sm btn-default btn-flat pull-right">Quản lý Phiếu xuất kho</a>
+    	<a href="/xuatkho/phieu-xuat-kho/phieu-xuat-cong-trinh?id=<?= $model->id ?>" class="btn btn-sm btn-default btn-flat pull-right">Quản lý Phiếu xuất kho</a>
     </div>
 
 </div>

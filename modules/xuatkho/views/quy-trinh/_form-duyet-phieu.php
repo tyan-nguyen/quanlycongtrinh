@@ -4,8 +4,8 @@ use app\modules\nguoidung\models\PhongBan;
 ?>
 
 <script src="/js/vue.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="/js/select2/select2.min.css" rel="stylesheet" />
+<script src="/js/select2/select2.min.js"></script>
 <style>
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #444;

@@ -12,6 +12,7 @@ use Yii;
  * @property int|null $nam
  * @property string|null $thoi_gian_yeu_cau
  * @property int $id_cong_trinh
+ * @property int|null $id_ke_hoach
  * @property int|null $id_bo_phan_yc
  * @property string|null $ly_do
  * @property int|null $id_tai_xe
@@ -33,6 +34,7 @@ use Yii;
  *
  * @property User $boPhanYc
  * @property CongTrinh $congTrinh
+ * @property KeHoachXuatKho $keHoach
  * @property User $nguoiDuyet
  * @property TaiXe $taiXe
  * @property VatTuXuat[] $vatTuXuats
@@ -54,7 +56,7 @@ class PhieuXuatKho extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'create_user'], 'integer'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_ke_hoach', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'create_user'], 'integer'],
             [['thoi_gian_yeu_cau', 'ngay_giao_hang', 'thoi_gian_nhap_giao_hang', 'thoi_gian_duyet', 'create_date'], 'safe'],
             [['id_cong_trinh'], 'required'],
             [['ly_do', 'ghi_chu_giao_hang', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
@@ -62,6 +64,7 @@ class PhieuXuatKho extends \yii\db\ActiveRecord
             [['trang_thai'], 'string', 'max' => 20],
             [['id_cong_trinh'], 'exist', 'skipOnError' => true, 'targetClass' => CongTrinh::class, 'targetAttribute' => ['id_cong_trinh' => 'id']],
             [['id_nguoi_duyet'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_nguoi_duyet' => 'id']],
+            [['id_ke_hoach'], 'exist', 'skipOnError' => true, 'targetClass' => KeHoachXuatKho::class, 'targetAttribute' => ['id_ke_hoach' => 'id']],
             [['id_tai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => TaiXe::class, 'targetAttribute' => ['id_tai_xe' => 'id']],
             [['id_xe'], 'exist', 'skipOnError' => true, 'targetClass' => Xe::class, 'targetAttribute' => ['id_xe' => 'id']],
             [['id_bo_phan_yc'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_bo_phan_yc' => 'id']],
@@ -79,6 +82,7 @@ class PhieuXuatKho extends \yii\db\ActiveRecord
             'nam' => 'Nam',
             'thoi_gian_yeu_cau' => 'Thoi Gian Yeu Cau',
             'id_cong_trinh' => 'Id Cong Trinh',
+            'id_ke_hoach' => 'Id Ke Hoach',
             'id_bo_phan_yc' => 'Id Bo Phan Yc',
             'ly_do' => 'Ly Do',
             'id_tai_xe' => 'Id Tai Xe',
@@ -118,6 +122,16 @@ class PhieuXuatKho extends \yii\db\ActiveRecord
     public function getCongTrinh()
     {
         return $this->hasOne(CongTrinh::class, ['id' => 'id_cong_trinh']);
+    }
+
+    /**
+     * Gets query for [[KeHoach]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKeHoach()
+    {
+        return $this->hasOne(KeHoachXuatKho::class, ['id' => 'id_ke_hoach']);
     }
 
     /**

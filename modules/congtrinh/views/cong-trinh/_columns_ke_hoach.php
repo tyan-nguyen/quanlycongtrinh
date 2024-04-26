@@ -2,7 +2,9 @@
 use yii\helpers\Url;
 use app\widgets\TrangThaiPhieuXuatKhoWidget;
 use kartik\grid\GridView;
-use app\modules\xuatkho\models\PhieuXuatKho;
+use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
+use app\modules\vanchuyen\taixe\models\TaiXe;
+use app\modules\vanchuyen\xe\models\Xe;
 use yii\helpers\Html;
 
 return [
@@ -14,31 +16,18 @@ return [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '30px',
     ],
-        // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id',
-    // ],
-    
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_cong_trinh',
-        'value'=>function($model){
-            return $model->congTrinh->ten_cong_trinh;
-        }
-    ],
-    
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
         'format'=>'raw',
         'value'=>function($model){
-        return TrangThaiPhieuXuatKhoWidget::widget([
-            'value' => $model->trang_thai,
-            'text' => $model->getDmTrangThaiLabel($model->trang_thai)
-        ]);
+            return TrangThaiPhieuXuatKhoWidget::widget([
+                'value' => $model->trang_thai,
+                'text' => $model->getDmTrangThaiLabel($model->trang_thai)
+            ]);
         },
         'filterType' => GridView::FILTER_SELECT2,
-        'filter' => PhieuXuatKho::getDmTrangThai(),
+        'filter' => KeHoachXuatKho::getDmTrangThai(),
         'filterWidgetOptions' => [
             'pluginOptions' => ['allowClear' => true],
         ],
@@ -50,16 +39,37 @@ return [
         'attribute'=>'so_phieu',
         'format'=>'raw',
         'value'=>function($model){
-        return Html::a($model->soPhieu, ['/xuatkho/phieu-xuat-kho/update', 'id'=>$model->id], [
-            'role'=>'modal-remote',
-            'title'=>Yii::t('app', 'Update'),
-            'data-toggle'=>'tooltip',
-            'class'=>'btn btn-primary btn-xs'
-        ]);
+            return Html::a($model->soPhieu, ['/kehoachxuatkho/phieu-xuat-kho/update', 'id'=>$model->id], [
+                'role'=>'modal-remote',
+                'title'=>Yii::t('app', 'Update'), 
+                'data-toggle'=>'tooltip',
+                'class'=>'btn btn-primary btn-xs'
+            ]);
         },
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Phiếu xuất kho',
+        'format'=>'raw',
+        'value'=>function($model){
+            return Html::a($model->soPhieu, ['/kehoachxuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
+                'role'=>'modal-remote1',
+                'data-pjax'=>0,
+                'title'=>Yii::t('app', 'Xem phiếu xuất kho'),
+                'data-toggle'=>'tooltip',
+                'class'=>'btn btn-primary btn-xs'
+            ]);
+        },
+        'width' => '150px',
+        'contentOptions'=>['style'=>'text-align:center']
+    ],
+        // [
+        // 'class'=>'\kartik\grid\DataColumn',
+        // 'attribute'=>'id',
+    // ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_yeu_cau',
@@ -80,36 +90,38 @@ return [
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']
     ],
-    
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'id_cong_trinh',
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_bo_phan_yc',
         'value'=>function($model){
-        return $model->tenBoPhanYeuCau;
-        },
-    ],
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'create_user',
-        'value'=>function($model){
-            return $model->nguoiTao!=null ? $model->nguoiTao->name : '';
+            return $model->tenBoPhanYeuCau;
         },
     ],
     
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'',
-        'label'=>'Tổng tiền',
+        'attribute'=>'create_user',
         'value'=>function($model){
-        return number_format($model->tongTien);
+             return $model->nguoiTao!=null ? $model->nguoiTao->name :'';
+        },
+        ],
+    /* [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'ly_do',
+    ], */
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Tổng tiền đề nghị',
+        'value'=>function($model){
+            return number_format($model->tongTien);
         },
         'contentOptions'=>['style'=>'font-weight:bold']
-    ],
-        
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'id_xe',
-    // ],
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_ky',
@@ -122,10 +134,7 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
     // 'attribute'=>'don_gia',
     // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'trang_thai',
-    // ],
+     
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'create_date',
@@ -134,10 +143,11 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'create_user',
     // ],
-   /*  [
+    /* [
         'class' => 'kartik\grid\ActionColumn',
         'dropdown' => false,
         'vAlign'=>'middle',
+        'template'=>'{update} {delete}',
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },

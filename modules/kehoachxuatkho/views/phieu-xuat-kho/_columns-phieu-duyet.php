@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use app\widgets\TrangThaiPhieuXuatKhoWidget;
 use kartik\grid\GridView;
-use app\modules\xuatkho\models\PhieuXuatKho;
+use app\modules\kehoachxuatkho\models\PhieuXuatKho;
 use yii\helpers\Html;
 
 return [
@@ -27,7 +27,7 @@ return [
         }
     ],
     
-    [
+   /*  [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'trang_thai',
         'format'=>'raw',
@@ -43,8 +43,8 @@ return [
             'pluginOptions' => ['allowClear' => true],
         ],
         'filterInputOptions' => ['placeholder' => '-Tất cả-'],
-        'contentOptions'=>['style'=>'text-align:center']
-    ],
+        'contentOptions'=>['style'=>'text-align:center']m
+    ], */
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'so_phieu',
@@ -92,7 +92,7 @@ return [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'create_user',
         'value'=>function($model){
-            return $model->nguoiTao!=null ? $model->nguoiTao->name : '';
+        return $model->nguoiTao->name;
         },
     ],
     

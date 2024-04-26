@@ -127,10 +127,12 @@ $this->title = 'Thông tin công trình';
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Dự toán & thi công thực tế</a></li>
+                    <li class="active"><a href="#home" data-toggle="tab">Phiếu xuất kho</a></li>
+                    <li><a href="#kehoach" data-toggle="tab">Kế hoạch xuất kho</a></li>
+                    <li><a href="#boctach" data-toggle="tab">Bóc tách và thi công thực tế</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="active tab-pane" id="activity">
+                    <div class="active tab-pane" id="home">
                     
                         <div class="post">
                         	
@@ -138,12 +140,19 @@ $this->title = 'Thông tin công trình';
                         	
         				</div>
         				
-        				 <div class="post">
-                        	
-                        	<?= $this->render('_phieu_boc_tach', compact('model', 'dataProvider2')) ?>
-                        	
-        				</div>
                     
+                    </div>
+                    
+                    <div class="tab-pane" id="kehoach">
+                    	<div class="post">                        	
+                        	<?= $this->render('_ke_hoach', compact('model', 'dataProvider3')) ?>
+                        </div>	
+                    </div>
+                    
+                    <div class="tab-pane" id="boctach">
+                    	<div class="post">                        	
+                        	<?= $this->render('_phieu_boc_tach', compact('model', 'dataProvider2')) ?>
+                        </div>	
                     </div>
                 
                 </div>

@@ -1,20 +1,19 @@
 <?php
 
-namespace app\modules\xuatkho\models\base;
+namespace app\modules\kehoachxuatkho\models\base;
 use app\modules\congtrinh\models\CongTrinh;
 use Yii;
 use app\models\User;
 use app\modules\vanchuyen\taixe\models\TaiXe;
 use app\modules\vanchuyen\xe\models\Xe;
 /**
- * This is the model class for table "phieu_xuat_kho".
+ * This is the model class for table "ke_hoach_xuat_kho".
  *
  * @property int $id
  * @property int|null $so_phieu
  * @property int|null $nam
  * @property string $thoi_gian_yeu_cau
  * @property int $id_cong_trinh
- * @property int|null $id_ke_hoach
  * @property int $id_bo_phan_yc
  * @property string $ly_do
  * @property int $id_tai_xe
@@ -31,6 +30,8 @@ use app\modules\vanchuyen\xe\models\Xe;
  * @property string|null $y_kien_nguoi_gui
  * @property string|null $y_kien_nguoi_duyet
  * @property string|null $thoi_gian_duyet
+ * @property int|null $tao_khong_qui_trinh
+ * @property int|null $xuat_khong_qui_trinh
  * @property string|null $create_date
  * @property int|null $create_user
  *
@@ -41,7 +42,7 @@ use app\modules\vanchuyen\xe\models\Xe;
  * @property VatTuXuat[] $vatTuXuats
  * @property Xe $xe
  */
-class PhieuXuatKhoBase extends \app\models\PhieuXuatKho
+class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
 {
     public $kiemTraVatTuDaDuyet;
     /**
@@ -112,7 +113,7 @@ class PhieuXuatKhoBase extends \app\models\PhieuXuatKho
             [['y_kien_nguoi_duyet'], 'required', 'on'=>'duyet-phieu'], //on gui yeu cau
             [['ghi_chu_giao_hang', 'ngay_giao_hang', 'id_tai_xe', 'id_xe'], 'required', 'on'=>'duyet-giao-hang'], //on gui yeu cau
             [['thoi_gian_yeu_cau', 'create_date', 'ngay_giao_hang', 'thoi_gian_duyet', 'thoi_gian_nhap_giao_hang', 'kiemTraVatTuDaDuyet'], 'safe'],
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_ke_hoach', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'create_user'], 'integer'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
             [['ly_do', 'ghi_chu_giao_hang', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
             [['don_gia'], 'number'],
             [['trang_thai'], 'string', 'max' => 20],
@@ -135,7 +136,6 @@ class PhieuXuatKhoBase extends \app\models\PhieuXuatKho
             'nam' => 'Năm',
             
             'id_cong_trinh' => 'Công trình',
-            'id_ke_hoach' => 'Id Ke Hoach',
             'id_bo_phan_yc' => 'Bộ phận yêu cầu',
             'ly_do' => 'Lý do xuất kho',
             'id_tai_xe' => 'Tài xế',
@@ -153,6 +153,8 @@ class PhieuXuatKhoBase extends \app\models\PhieuXuatKho
             'y_kien_nguoi_duyet' => 'Ý kiến người duyệt',
             'don_gia' => 'Đơn giá',
             'trang_thai' => 'Trạng thái',
+            'tao_khong_qui_trinh' => 'Thêm mới không qua qui trình',
+            'xuat_khong_qui_trinh' => 'Xuất vật tư không qua qui trình',
             'create_date' => 'Ngày tạo',
             'create_user' => 'Người tạo',
             
