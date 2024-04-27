@@ -55,7 +55,7 @@ return [
         'label'=>'Phiếu xuất kho',
         'format'=>'raw',
         'value'=>function($model){
-            return Html::a($model->soPhieu, ['/kehoachxuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
+            return Html::a($model->soPhieu, ['/xuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
                 'role'=>'modal-remote1',
                 'data-pjax'=>0,
                 'title'=>Yii::t('app', 'Xem phiếu xuất kho'),

@@ -20,13 +20,15 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
         else 
             return false;
     }
+    
     public function getSoPhieu(){
         if($this->so_phieu != null){
             return 'KH' . $this->fillNumber($this->so_phieu) . '/' . $this->namCuaPhieu;
         } else {
             return 'KHN' . $this->fillNumber($this->getSoPhieuCuoi($this->nam) + 1) . '/' . $this->namCuaPhieu;
         }
-    }    
+    }
+    
     public function getSoPhieuCuoi($year=NULl){
         if($year==null)
             $year = date('Y');
@@ -39,7 +41,8 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
             return $phieuCuoi->so_phieu;
         else 
             return 0;
-    }    
+    }
+    
     public function getNamCuaPhieu(){
         if($this->nam != null){
             return $this->nam;
@@ -50,6 +53,7 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
             }
         }
     }
+    
     public function fillNumber($number){
         $num = strlen($number);
         if( $num < 3){
@@ -86,7 +90,7 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
     
     public function dsVatTuYeuCau(){
         $result = array();
-        foreach ($this->vatTuXuat as $iVt=>$vatTu){            
+        foreach ($this->vatTuXuat as $iVt=>$vatTu){
             $result[] = [
                 'id'=>$vatTu->id,
                 'idPhieu'=>$vatTu->id_phieu_xuat_kho,
@@ -127,8 +131,7 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
         $month = date("m", strtotime($dateYc));
         $year = date("Y", strtotime($dateYc));
         
-        return 'Ngày ' . $day . ' tháng ' . $month . ' năm '. $year;
-        
+        return 'Ngày ' . $day . ' tháng ' . $month . ' năm '. $year;        
     }
     
     public function getNgayYeuCauShort(){

@@ -298,6 +298,10 @@ class PhieuXuatKhoController extends Controller
         } else {
             $model = new KeHoachXuatKho();
             $model->id_cong_trinh = $idct;
+            if($modelCongTrinh->quyenDuyet){
+                $model->tao_khong_qui_trinh = 1;//không đi theo qui trình khi người duyệt tạo kế hoạch
+                $model->xuat_khong_qui_trinh = 0;
+            }
             if($model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',

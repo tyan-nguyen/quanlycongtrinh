@@ -10,6 +10,7 @@ use app\modules\nguoidung\models\PhongBan;
 use app\modules\nguoidung\models\NguoiDung;
 use app\custom\CustomFunc;
 use app\modules\congtrinh\models\CongTrinh;
+use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
 
 class PhieuXuatKho extends PhieuXuatKhoBase
 {
@@ -239,10 +240,10 @@ class PhieuXuatKho extends PhieuXuatKhoBase
      *
      * @return \yii\db\ActiveQuery
      */
-    /* public function getKeHoach()
+    public function getKeHoach()
     {
         //sua doi ten lai ka KeHoachXuatKho sau...
-        return $this->hasOne(\app\modules\kehoachxuatkho\models\PhieuXuatKho::class, ['id' => 'id_ke_hoach']);
-    } */
+        return $this->hasOne(KeHoachXuatKho::class, ['id' => 'id_ke_hoach']);
+    }
   
 }

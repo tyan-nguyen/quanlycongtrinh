@@ -20,7 +20,7 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 }
 </style>
 
-<?= $this->render('_info_cong_trinh', ['model'=>$model->congTrinh]) ?>
+<?= $this->render('_info_ke_hoach', ['model'=>$model]) ?>
 
 <section class="phieu-xuat-kho-form" style="background-color: white; padding:10px;">
 <?php $form = ActiveForm::begin([

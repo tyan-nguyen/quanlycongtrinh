@@ -127,8 +127,8 @@ $this->title = 'Thông tin công trình';
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#home" data-toggle="tab">Phiếu xuất kho</a></li>
-                    <li><a href="#kehoach" data-toggle="tab">Kế hoạch xuất kho</a></li>
+                    <li class="active"><a href="#kehoach" data-toggle="tab">Kế hoạch xuất kho</a></li>
+                    <li><a href="#home" data-toggle="tab">Tổng hợp Phiếu xuất kho</a></li>
                     <li><a href="#boctach" data-toggle="tab">Bóc tách và thi công thực tế</a></li>
                 </ul>
                 <div class="tab-content">

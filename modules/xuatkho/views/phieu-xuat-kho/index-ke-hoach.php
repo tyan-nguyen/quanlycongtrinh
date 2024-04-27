@@ -3,14 +3,14 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
-use johnitvn\ajaxcrud\CrudAsset; 
+use johnitvn\ajaxcrud\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PhieuXuatKhoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kế hoạch Xuất Kho';
+$this->title = 'Phiếu Xuất Kho';
 $this->params['breadcrumbs'][] = $this->title;
 
 //CrudAsset::register($this);
@@ -35,14 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="user-block">
                 <img class="img-circle img-bordered-sm" src="/images/cong-trinh-128x128.jpg" alt="user image">
                 <span class="username">
-                	<h4 style="margin-top:0; color:#3c8dbc; font-size:22px;"><?= $model->ten_cong_trinh ?></h4>
+                	<h4 style="margin-top:0; color:#3c8dbc; font-size:22px;"><?= $model->congTrinh->ten_cong_trinh ?></h4>
                 </span>
                 <span class="description">
-                	<i class="fa fa-map-marker"></i> <?= $model->dia_diem ?>
+                	<i class="fa fa-map-marker"></i> <?= $model->congTrinh->dia_diem ?>
                 </span>
                 <!-- <span class="description">
-                	<?= $model->tg_bat_dau != null ? ('Thời gian bắt đầu:' . $model->thoiGianBatDau) : '' ?>
-                	<?= $model->tg_ket_thuc != null ? ('- Thời gian kết thúc:' . $model->thoiGianKetThuc) : '' ?>
+                <?= $model->congTrinh->tg_bat_dau != null ? ('Thời gian bắt đầu:' . $model->congTrinh->thoiGianBatDau) : '' ?>
+                <?= $model->congTrinh->tg_ket_thuc != null ? ('- Thời gian kết thúc:' . $model->congTrinh->thoiGianKetThuc) : '' ?>
                 </span> -->
             </div>
 
@@ -60,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => require(__DIR__.'/_columns_ke_hoach.php'),
             'toolbar'=> [
                 ['content'=>
-                   ( $model->quyenTao ? Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create', 'idct'=>$model->id],
-                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Thêm mới') . ' Kế hoạch xuất kho','class'=>'btn btn-default']) : '').
+                    Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create-ke-hoach', 'idkh'=>$model->id],
+                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Create new') . ' Phieu Xuat Khos','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i> ' . Yii::t('app', 'Reset Grid'), ['', 'id'=>$model->id],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>Yii::t('app', 'Reset Grid')])
                 ],
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách Kế hoạch',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách phiếu xuất kho theo kế hoạch '. $model->soPhieu,
                 //'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                     'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; ' . Yii::t('app', 'Delete All'),

@@ -15,7 +15,7 @@
                     <?= $model->tg_ket_thuc != null ? ('- Thời gian kết thúc:' . $model->thoiGianKetThuc) : '' ?>
                     </span> -->
                 </div>
-
+                
             </div>
     	</div>
 </div>

@@ -335,6 +335,42 @@ class PhieuXuatKhoController extends Controller
             }
         }
     }
+    
+    /**
+     * Creates a new PhieuXuatKho model.
+     * For ajax request will return json object
+     * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateKeHoach($idkh){
+        //$request = Yii::$app->request;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
+        $modelKeHoach = KeHoachXuatKho::findOne($idkh);
+        if($modelKeHoach == null){
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        } else {
+            $model = new PhieuXuatKho();
+            $model->id_ke_hoach = $idkh;
+            $model->id_cong_trinh = $modelKeHoach->id_cong_trinh;
+            if($model->save()){
+                return [
+                    'forceReload'=>'#crud-datatable-pjax',
+                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button(Yii::t('app', 'Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"])
+                ];
+            } else {
+                return [
+                    'err' => $model->errors
+                ];
+            }
+        }
+    }
+    
     /* public function actionCreate($id=NULL)
     {
         $request = Yii::$app->request;
