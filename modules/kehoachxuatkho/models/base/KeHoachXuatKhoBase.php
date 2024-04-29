@@ -55,7 +55,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             'CHO_DUYET'=>'Chờ duyệt',
             'DA_DUYET'=>'Đã duyệt',
             'KHONG_DUYET'=>'Không duyệt',
-            'DA_GIAO_HANG'=>'DA_GIAO_HANG',
+            'DA_HOAN_THANH'=>'Đã hoàn thành',
         ];
     }
     
@@ -74,8 +74,8 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             $label = 'Đã duyệt';
         }else if($val == 'KHONG_DUYET'){
             $label = 'Không duyệt';
-        }else if($val == 'DA_GIAO_HANG'){
-            $label = 'Đã giao hàng';
+        }else if($val == 'DA_HOAN_THANH'){
+            $label = 'Đã hoàn thành';
         }
         return $label;
     }
@@ -88,7 +88,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             'CHO_DUYET',
             'DA_DUYET',
             'KHONG_DUYET',
-            'DA_GIAO_HANG'
+            'DA_HOAN_THANH'
         ];
     }
     
@@ -98,7 +98,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
     public static function getDmTrangThaiDuocDuyet(){
         return [
             'DA_DUYET',
-            'DA_GIAO_HANG'
+            'DA_HOAN_THANH'
         ];
     }
 
@@ -170,6 +170,10 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
                 $this->trang_thai = 'BAN_NHAP';
             if($this->nam == NULL)
                 $this->nam = date('Y');
+            if($this->xuat_khong_qui_trinh == NULL)
+                $this->xuat_khong_qui_trinh  = 0;
+            if($this->tao_khong_qui_trinh == NULL)
+                $this->tao_khong_qui_trinh  = 0;
         }
         return parent::beforeSave($insert);
     }

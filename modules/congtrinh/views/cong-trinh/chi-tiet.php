@@ -132,7 +132,14 @@ $this->title = 'Thông tin công trình';
                     <li><a href="#boctach" data-toggle="tab">Bóc tách và thi công thực tế</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="active tab-pane" id="home">
+                
+                	<div class="active tab-pane" id="kehoach">
+                    	<div class="post">                        	
+                        	<?= $this->render('_ke_hoach', compact('model', 'dataProvider3')) ?>
+                        </div>	
+                    </div>
+                    
+                    <div class="tab-pane" id="home">
                     
                         <div class="post">
                         	
@@ -143,11 +150,7 @@ $this->title = 'Thông tin công trình';
                     
                     </div>
                     
-                    <div class="tab-pane" id="kehoach">
-                    	<div class="post">                        	
-                        	<?= $this->render('_ke_hoach', compact('model', 'dataProvider3')) ?>
-                        </div>	
-                    </div>
+                    
                     
                     <div class="tab-pane" id="boctach">
                     	<div class="post">                        	

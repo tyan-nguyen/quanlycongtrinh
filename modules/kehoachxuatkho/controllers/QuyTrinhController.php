@@ -276,7 +276,7 @@ class QuyTrinhController extends Controller
                 ];
             }else if($model->load($request->post())){
                 if($model->validate()){
-                    $model->trang_thai = 'DA_GIAO_HANG';
+                    $model->trang_thai = 'DA_HOAN_THANH';
                     $model->thoi_gian_nhap_giao_hang = date('Y-m-d H:i:s');
                     $model->id_nguoi_nhap_giao_hang = Yii::$app->user->id;
                     $model->save();
@@ -288,7 +288,7 @@ class QuyTrinhController extends Controller
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
                         Html::button(Yii::t('app', 'Lưu lại'),['class'=>'btn btn-primary','type'=>"submit"]),
-                        'toast'=>'Đã nhập thông tin giao hàng thành công!'
+                        'toast'=>'Đã nhập nghiệm thu kế hoạch xuất kho thành công!'
                     ];
                 } else {
                     return [
@@ -297,7 +297,7 @@ class QuyTrinhController extends Controller
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                        Html::button(Yii::t('app', 'Ghi dữ liệu giao hàng'),['class'=>'btn btn-primary','type'=>"submit"
+                        Html::button(Yii::t('app', 'Ghi dữ liệu nghiệm thu'),['class'=>'btn btn-primary','type'=>"submit"
                         ])
                     ];
                 }
@@ -308,7 +308,7 @@ class QuyTrinhController extends Controller
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                    Html::button(Yii::t('app', 'Ghi dữ liệu giao hàng'),['class'=>'btn btn-primary','type'=>"submit"
+                    Html::button(Yii::t('app', 'Ghi dữ liệu nghiệm thu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
             }

@@ -55,12 +55,15 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		Ngày giao hàng: <?= $model->ngayGiaoHang ?> <br/>
         Ghi chú giao hàng: <?= $model->ghi_chu_giao_hang ?>
 	</div>-->
+	
+	<?php if($model->congTrinh->quyenDuyet){ ?>
 	 <div class="col-sm-3">
 		<h4>Cấu hình</h4>
-		<?= $form->field($model, 'tao_khong_qui_trinh')->checkbox(['disabled'=>true, 'class'=>'minimal-red', 'checked'=>true]) ?>
-		<?= $form->field($model, 'xuat_khong_qui_trinh')->checkbox(['class'=>'minimal-red']) ?>
-		
+		<?= $form->field($model, 'tao_khong_qui_trinh')->checkbox(['disabled'=>true, 'class'=>'minimal-red']) ?>
+		<?= $form->field($model, 'xuat_khong_qui_trinh')->checkbox(['class'=>'minimal-red']) ?>		
 	</div>
+	<?php } ?>
+	
 	<div class="col-sm-3">
 		Quy trình: <br/>
 		<?= TrangThaiPhieuXuatKhoWidget::widget([
@@ -72,12 +75,14 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<?php if($model->trang_thai == 'BAN_NHAP'){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Gửi phiếu xuất kho</a>
 		<?php } ?>
-		<?php if($model->trang_thai == 'CHO_DUYET'){ ?>
+		<?php if($model->trang_thai == 'CHO_DUYET' && $model->congTrinh->quyenDuyet ){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt phiếu xuất kho</a>
 		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt phiếu xuất kho</a>
+		<?php } else { ?>
+		Chờ Bộ phận Duyệt yêu cầu và xử lý đặt và giao hàng.
 		<?php } ?>
 		<?php if($model->trang_thai == 'DA_DUYET'){ ?>
-		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-giao-hang?idPhieu=<?= $model->id ?>" title="Nhập giao hàng" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Đặt và giao hàng</a>
+		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-giao-hang?idPhieu=<?= $model->id ?>" title="Nhập giao hàng" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Nghiệm thu Kế hoạch</a>
 		<?php } ?>
 		
 	</div> 
