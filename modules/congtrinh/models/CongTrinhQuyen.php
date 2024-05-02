@@ -6,6 +6,7 @@ use Yii;
 use app\custom\CustomFunc;
 use app\modules\congtrinh\models\base\CongTrinhQuyenBase;
 use app\modules\nguoidung\models\NguoiDung;
+use yii\helpers\ArrayHelper;
 
 class CongTrinhQuyen extends CongTrinhQuyenBase
 {
@@ -24,4 +25,5 @@ class CongTrinhQuyen extends CongTrinhQuyenBase
     public function getTenQuyen(){
         return $this->getDmQuyenLabel($this->quyen);
     }
+    
 }

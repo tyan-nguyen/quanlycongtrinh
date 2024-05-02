@@ -26,18 +26,12 @@ use app\modules\vanchuyen\xe\models\Xe;
 
 <div class="row">
 
-	<!-- Thông tin vận chuyển -->
-	<div class="col-sm-3">
-		<?= $form->field($model, 'id_tai_xe')->dropDownList( (new TaiXe())->getList(), ['prompt'=>'-Chọn-'] ) ?>
-	</div>
-	<div class="col-sm-3">
-		<?= $form->field($model, 'id_xe')->dropDownList( (new Xe())->getList(), ['prompt'=>'-Chọn-'] ) ?>	
-	</div>
+	
 	<div class="col-sm-4">
-	 	<?= $form->field($model, 'ghi_chu_giao_hang')->textarea(['rows'=>1]) ?>
+	 	<?= $form->field($model, 'ghi_chu_nghiem_thu')->textarea(['rows'=>1]) ?>
 	</div>
 	<div class="col-sm-2">
-		<?= $form->field($model, 'ngay_giao_hang')->textInput(['type' => 'date', 'placeholder'=>'DD/MM/YYYY']) ?>
+		<?= $form->field($model, 'ngay_nghiem_thu')->textInput(['type' => 'date', 'placeholder'=>'DD/MM/YYYY']) ?>
 	</div>
 
 </div>

@@ -37,22 +37,24 @@ class QuyTrinhController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-gui-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                     Html::button(Yii::t('app', 'Gửi phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
             }else if($model->load($request->post())){
                 if($model->vatTuXuat==null){
                     return [
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('_form-gui-phieu', [
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                        Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']).
                         Html::button(Yii::t('app', 'Gửi phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                         ]),
                         'toast' => 'Vui lòng nhập vật tư vào phiếu trước khi gửi đi!'
@@ -65,7 +67,7 @@ class QuyTrinhController extends Controller
                     $model->save();
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('../phieu-xuat-kho/update', [
                             'model' => $model,
                         ]),
@@ -75,22 +77,24 @@ class QuyTrinhController extends Controller
                     ];
                 } else {
                     return [
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('_form-gui-phieu', [
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                        Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']).
                         Html::button(Yii::t('app', 'Gửi phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                         ])
                     ];
                 }
             }else{
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-gui-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                     Html::button(Yii::t('app', 'Gửi phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
@@ -98,7 +102,7 @@ class QuyTrinhController extends Controller
         } else {
             return [
                 'status'=>'failed',
-                'content' => 'Phiếu xuất kho không tồn tại!'
+                'content' => 'Kế hoạch xuất kho không tồn tại!'
             ];
         }
     }
@@ -111,11 +115,12 @@ class QuyTrinhController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-duyet-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']).
                     Html::button(Yii::t('app', 'Duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
@@ -125,11 +130,12 @@ class QuyTrinhController extends Controller
                     if($vatTu->so_luong_duoc_duyet == null){
                         $model->addError('kiemTraVatTuDaDuyet', 'Vui lòng duyệt tất cả vật tư trong phiếu!');
                         return [
-                            'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                            'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                             'content'=>$this->renderAjax('_form-duyet-phieu', [
                                 'model' => $model,
                             ]),
                             'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                            Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                             Html::button(Yii::t('app', 'Duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                             ])
                         ];
@@ -142,7 +148,7 @@ class QuyTrinhController extends Controller
                     $model->save();
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('../phieu-xuat-kho/update', [
                             'model' => $model,
                         ]),
@@ -152,23 +158,25 @@ class QuyTrinhController extends Controller
                     ];
                 } else {
                     return [
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('_form-duyet-phieu', [
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                        Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                         Html::button(Yii::t('app', 'Duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                         ])
                     ];
                 }
             }else{
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-duyet-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                    Html::button(Yii::t('app', 'Duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
+                    Html::button(Yii::t('app', 'Duyệt Kế hoạch'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
             }
@@ -189,12 +197,13 @@ class QuyTrinhController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-khong-duyet-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                    Html::button(Yii::t('app', 'Không duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
+                    Html::button(Yii::t('app', 'Không duyệt kế hoạch được yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
             }else if($model->load($request->post())){
@@ -220,7 +229,7 @@ class QuyTrinhController extends Controller
                     $model->save();
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('../phieu-xuat-kho/update', [
                             'model' => $model,
                         ]),
@@ -235,17 +244,19 @@ class QuyTrinhController extends Controller
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                        Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                         Html::button(Yii::t('app', 'Không duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                         ])
                     ];
                 }
             }else{
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-khong-duyet-phieu', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                     Html::button(Yii::t('app', 'Không duyệt phiếu yêu cầu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
@@ -266,23 +277,24 @@ class QuyTrinhController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-duyet-giao-hang', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                    Html::button(Yii::t('app', 'Ghi dữ liệu giao hàng'),['class'=>'btn btn-primary','type'=>"submit"
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']).                     
+                    Html::button(Yii::t('app', 'Ghi dữ liệu nghiệm thu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
             }else if($model->load($request->post())){
                 if($model->validate()){
                     $model->trang_thai = 'DA_HOAN_THANH';
-                    $model->thoi_gian_nhap_giao_hang = date('Y-m-d H:i:s');
-                    $model->id_nguoi_nhap_giao_hang = Yii::$app->user->id;
+                    $model->thoi_gian_nhap_nghiem_thu = date('Y-m-d H:i:s');
+                    $model->id_nguoi_nghiem_thu = Yii::$app->user->id;
                     $model->save();
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('../phieu-xuat-kho/update', [
                             'model' => $model,
                         ]),
@@ -292,22 +304,24 @@ class QuyTrinhController extends Controller
                     ];
                 } else {
                     return [
-                        'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                        'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                         'content'=>$this->renderAjax('_form-duyet-giao-hang', [
                             'model' => $model,
                         ]),
                         'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                        Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                         Html::button(Yii::t('app', 'Ghi dữ liệu nghiệm thu'),['class'=>'btn btn-primary','type'=>"submit"
                         ])
                     ];
                 }
             }else{
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('_form-duyet-giao-hang', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button(Yii::t('app', 'Đóng'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                    Html::a(Yii::t('app', 'Quay lại Kế hoạch'),['phieu-xuat-kho/update','id'=>$idPhieu],['class'=>'btn btn-primary','role'=>'modal-remote']). 
                     Html::button(Yii::t('app', 'Ghi dữ liệu nghiệm thu'),['class'=>'btn btn-primary','type'=>"submit"
                     ])
                 ];
@@ -315,7 +329,7 @@ class QuyTrinhController extends Controller
         } else {
             return [
                 'status'=>'failed',
-                'content' => 'Phiếu xuất kho không tồn tại!'
+                'content' => 'Kế hoạch xuất kho không tồn tại!'
             ];
         }
     }

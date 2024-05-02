@@ -1,11 +1,9 @@
 <?php
-
 namespace app\modules\kehoachxuatkho\models\base;
+
 use app\modules\congtrinh\models\CongTrinh;
 use Yii;
 use app\models\User;
-use app\modules\vanchuyen\taixe\models\TaiXe;
-use app\modules\vanchuyen\xe\models\Xe;
 /**
  * This is the model class for table "ke_hoach_xuat_kho".
  *
@@ -16,16 +14,13 @@ use app\modules\vanchuyen\xe\models\Xe;
  * @property int $id_cong_trinh
  * @property int $id_bo_phan_yc
  * @property string $ly_do
- * @property int $id_tai_xe
- * @property int $id_xe
- * @property string|null $ngay_giao_hang
- * @property string|null $ghi_chu_giao_hang
- * @property int|null $id_nguoi_nhap_giao_hang
- * @property string|null $thoi_gian_nhap_giao_hang
+ * @property string|null $ngay_nghiem_thu
+ * @property string|null $ghi_chu_nghiem_thu
+ * @property int|null $id_nguoi_nghiem_thu
+ * @property string|null $thoi_gian_nhap_nghiem_thu
  * @property string|null $nguoi_ky
  * @property int|null $id_nguoi_gui
  * @property int|null $id_nguoi_duyet
- * @property float $don_gia
  * @property string $trang_thai
  * @property string|null $y_kien_nguoi_gui
  * @property string|null $y_kien_nguoi_duyet
@@ -55,7 +50,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             'CHO_DUYET'=>'Chờ duyệt',
             'DA_DUYET'=>'Đã duyệt',
             'KHONG_DUYET'=>'Không duyệt',
-            'DA_HOAN_THANH'=>'Đã hoàn thành',
+            'DA_HOAN_THANH'=>'Nghiệm thu',
         ];
     }
     
@@ -75,7 +70,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
         }else if($val == 'KHONG_DUYET'){
             $label = 'Không duyệt';
         }else if($val == 'DA_HOAN_THANH'){
-            $label = 'Đã hoàn thành';
+            $label = 'Nghiệm thu';
         }
         return $label;
     }
@@ -111,16 +106,13 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             [['id_cong_trinh'], 'required'],
             [['ly_do'], 'required', 'on'=>'gui-phieu'], //on gui yeu cau
             [['y_kien_nguoi_duyet'], 'required', 'on'=>'duyet-phieu'], //on gui yeu cau
-            [['ghi_chu_giao_hang', 'ngay_giao_hang', 'id_tai_xe', 'id_xe'], 'required', 'on'=>'duyet-giao-hang'], //on gui yeu cau
-            [['thoi_gian_yeu_cau', 'create_date', 'ngay_giao_hang', 'thoi_gian_duyet', 'thoi_gian_nhap_giao_hang', 'kiemTraVatTuDaDuyet'], 'safe'],
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
-            [['ly_do', 'ghi_chu_giao_hang', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
-            [['don_gia'], 'number'],
+            [['ghi_chu_nghiem_thu', 'ngay_nghiem_thu'], 'required', 'on'=>'duyet-giao-hang'], //on gui yeu cau
+            [['thoi_gian_yeu_cau', 'create_date', 'ngay_nghiem_thu', 'thoi_gian_duyet', 'thoi_gian_nhap_nghiem_thu', 'kiemTraVatTuDaDuyet'], 'safe'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
+            [['ly_do', 'ghi_chu_nghiem_thu', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
             [['trang_thai'], 'string', 'max' => 20],
             [['id_cong_trinh'], 'exist', 'skipOnError' => true, 'targetClass' => CongTrinh::class, 'targetAttribute' => ['id_cong_trinh' => 'id']],
             [['id_nguoi_duyet'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_nguoi_duyet' => 'id']],
-            [['id_tai_xe'], 'exist', 'skipOnError' => true, 'targetClass' => TaiXe::class, 'targetAttribute' => ['id_tai_xe' => 'id']],
-            [['id_xe'], 'exist', 'skipOnError' => true, 'targetClass' => Xe::class, 'targetAttribute' => ['id_xe' => 'id']],
             [['id_bo_phan_yc'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_bo_phan_yc' => 'id']],
         ];
     }
@@ -132,18 +124,18 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
     {
         return [
             'id' => 'ID',
-            'so_phieu' => 'Số phiếu',
-            'nam' => 'Năm',
+            'so_phieu' => 'Số Kế hoạch',
+            'nam' => 'Năm vào sổ',
             
             'id_cong_trinh' => 'Công trình',
             'id_bo_phan_yc' => 'Bộ phận yêu cầu',
             'ly_do' => 'Lý do xuất kho',
-            'id_tai_xe' => 'Tài xế',
-            'id_xe' => 'Xe',
-            'ngay_giao_hang' => 'Ngày giao hàng',
-            'ghi_chu_giao_hang' => 'Ghi chú giao hàng',
-            'id_nguoi_nhap_giao_hang' => 'Người nhập giao hàng',
-            'thoi_gian_nhap_giao_hang' => 'Thời gian nhập giao hàng',
+            
+            'ngay_nghiem_thu' => 'Ngày nghiệm thu',
+            'ghi_chu_nghiem_thu' => 'Ghi chú nghiệm thu',
+            'id_nguoi_nghiem_thu' => 'Người nghiệm thu',
+            'thoi_gian_nhap_nghiem_thu' => 'Thời gian nhập nghiệm thu',
+            
             'nguoi_ky' => 'Nguoi Ky',//
             'id_nguoi_gui' => 'Người gửi',
             'y_kien_nguoi_gui' => 'Ý kiến người gửi',
@@ -151,7 +143,6 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             'id_nguoi_duyet' => 'Người duyệt',
             'thoi_gian_duyet' => 'Thời gian duyệt',
             'y_kien_nguoi_duyet' => 'Ý kiến người duyệt',
-            'don_gia' => 'Đơn giá',
             'trang_thai' => 'Trạng thái',
             'tao_khong_qui_trinh' => 'Thêm mới không qua qui trình',
             'xuat_khong_qui_trinh' => 'Xuất vật tư không qua qui trình',

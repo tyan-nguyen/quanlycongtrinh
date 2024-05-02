@@ -319,74 +319,6 @@ class PhieuXuatKhoController extends Controller
             }
         }
     }
-    /* public function actionCreate($id=NULL)
-    {
-        $request = Yii::$app->request;
-        $model = new PhieuXuatKho();  
-        $modelCongTrinh = CongTrinh::findOne($id);
-        if($modelCongTrinh == null){
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-        } else {
-        
-            if($request->isAjax){
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                if($request->isGet){
-                    return [
-                        'title'=> Yii::t('app', 'Create new') . " PhieuXuatKho",
-                        'content'=>$this->renderAjax('create', [
-                            'model' => $model,
-                        ]),
-                        'footer'=> Html::button(Yii::t('app', 'Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                    Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"])
-            
-                    ];         
-                }else if($model->load($request->post())){
-                    if($id != NULL){
-                        $model->id_cong_trinh = $id;
-                    }
-                    if($model->save()){
-                        return [
-                            'forceReload'=>'#crud-datatable-pjax',
-                            'title'=> Yii::t('app', 'Create new')." PhieuXuatKho",
-                            'content'=>'<span class="text-success">' . Yii::t('app', 'Create success!').'</span>',
-                            'footer'=> Html::button(Yii::t('app', 'Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                    Html::a(Yii::t('app', 'Create more'),['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
-                
-                        ];   
-                    }else{
-                        return [
-                            'title'=> Yii::t('app', 'Create new') ." PhieuXuatKho",
-                            'content'=>$this->renderAjax('create', [
-                                'model' => $model,
-                            ]),
-                            'footer'=> Html::button(Yii::t('app', 'Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                            Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"])
-                            
-                        ];
-                    }
-                }else{           
-                    return [
-                        'title'=> Yii::t('app', 'Create new') ." PhieuXuatKho",
-                        'content'=>$this->renderAjax('create', [
-                            'model' => $model,
-                        ]),
-                        'footer'=> Html::button(Yii::t('app', 'Close'),['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
-                                    Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"])
-            
-                    ];         
-                }
-            }else{
-                if ($model->load($request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('create', [
-                        'model' => $model,
-                    ]);
-                }
-            }
-        }//end if modelCongTrinh
-       
-    } */
 
     /**
      * Updates an existing PhieuXuatKho model.
@@ -407,7 +339,7 @@ class PhieuXuatKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -417,7 +349,7 @@ class PhieuXuatKhoController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -427,7 +359,7 @@ class PhieuXuatKhoController extends Controller
                 ];   
             }else{
                  return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> PHIẾU XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

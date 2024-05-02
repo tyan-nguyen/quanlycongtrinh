@@ -19,6 +19,8 @@ class TrangThaiPhieuXuatKhoWidget extends Widget
         'DA_DUYET'=>'success',       
         'KHONG_DUYET'=>'danger',
         'DA_GIAO_HANG'=>'info',
+        //for ke hoach
+        'DA_HOAN_THANH'=>'info',
     ];
     public $labelIcons = [
         'BAN_NHAP'=>'glyphicon glyphicon-edit',
@@ -26,6 +28,8 @@ class TrangThaiPhieuXuatKhoWidget extends Widget
         'DA_DUYET'=>'glyphicon glyphicon-check',
         'KHONG_DUYET'=>'glyphicon glyphicon-remove-sign',
         'DA_GIAO_HANG'=>'fa fa-truck',
+        
+        'DA_HOAN_THANH'=>'glyphicon glyphicon-book',
     ];
     
     public function init(){

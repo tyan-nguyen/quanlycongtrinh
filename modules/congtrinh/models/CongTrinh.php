@@ -8,6 +8,7 @@ use app\custom\CustomFunc;
 use app\modules\xuatkho\models\PhieuXuatKho;
 use app\modules\xuatkho\models\VatTuBocTach;
 use app\modules\xuatkho\models\VatTuXuat;
+use yii\helpers\ArrayHelper;
 
 class CongTrinh extends CongTrinhBase
 {
@@ -168,5 +169,19 @@ class CongTrinh extends CongTrinhBase
             return false;
             else
                 return true;
+    }
+    
+    public function getDsNguoiTao(){
+        $list = CongTrinhQuyen::find()->where([
+            'id_cong_trinh' => $this->id,
+            'quyen' => 'TAO_XUAT_KHO'
+        ])->orderBy(['ngung_phu_trach'=>SORT_ASC])->all();
+        return ArrayHelper::map($list, 'id_nguoi_dung', function($model) {
+            if($model->ngung_phu_trach){
+                return $model->nguoiDung->name . ' (Ngưng phụ trách)';
+            } else {
+                return $model->nguoiDung->name;
+            }
+        });
     }
 }

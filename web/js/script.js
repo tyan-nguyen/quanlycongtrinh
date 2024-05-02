@@ -12,6 +12,19 @@ function printPhieu(){
     });
 }
 
+/**
+ * in html tu 1 div
+ * [them id #print cho div parent]
+ */
+function printKeHoach(){
+	$('#print').printThis({
+		 //debug: false,               // show the iframe for debugging
+		 importCSS: false,            // import parent page css
+		 loadCSS: ['/css/print-single-ke-hoach.css?v=1'],
+		 //printDelay: 333,
+    });
+}
+
 
 /*$('#changeLang').on('click', function(){ // on change of state
 	if(this.checked){

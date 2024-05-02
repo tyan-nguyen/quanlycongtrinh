@@ -5,6 +5,8 @@ namespace app\modules\kehoachxuatkho\models;
 use Yii;
 use app\modules\kehoachxuatkho\models\base\VatTuKeHoachBase;
 use app\modules\vattu\models\VatTu;
+use app\modules\xuatkho\models\VatTuXuat;
+use app\modules\xuatkho\models\PhieuXuatKho;
 
 class VatTuKeHoach extends VatTuKeHoachBase
 {
@@ -63,6 +65,11 @@ class VatTuKeHoach extends VatTuKeHoachBase
         } else {
             return $sum . '/' . $slBocTach;
         } */
+        $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_cong_trinh'=>$this->phieuXuatKho->id_cong_trinh])
+        ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->all();
+        
+        
+        
         return 0;
     }
     

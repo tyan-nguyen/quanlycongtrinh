@@ -1,7 +1,5 @@
 <?php
-
 namespace app\modules\kehoachxuatkho\models\search;
-
 
 use Yii;
 use yii\base\Model;
@@ -21,9 +19,8 @@ class KeHoachXuatKhoSearch extends KeHoachXuatKho
     public function rules()
     {
         return [
-            [['id', 'id_cong_trinh', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_duyet', 'create_user', 'so_phieu', 'nam'], 'integer'],
-            [['thoi_gian_yeu_cau', 'ly_do', 'nguoi_ky', 'trang_thai', 'create_date', 'ghi_chu_giao_hang', 'ngay_giao_hang'], 'safe'],
-            [['don_gia'], 'number'],
+            [['id', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_duyet', 'create_user', 'so_phieu', 'nam'], 'integer'],
+            [['thoi_gian_yeu_cau', 'ly_do', 'nguoi_ky', 'trang_thai', 'create_date', 'ghi_chu_nghiem_thu', 'ngay_nghiem_thu'], 'safe'],
         ];
     }
 
@@ -72,30 +69,28 @@ class KeHoachXuatKhoSearch extends KeHoachXuatKho
         }
         
         if($this->thoi_gian_yeu_cau != null){
-            $query->andFilterWhere([
+            /* $query->andFilterWhere([
                 'thoi_gian_yeu_cau' => $custom->convertDMYToYMD($this->thoi_gian_yeu_cau),
-            ]);
+            ]); */
+            $query->andWhere('date(thoi_gian_yeu_cau) = :tgyc', [':tgyc'=>$custom->convertDMYToYMD($this->thoi_gian_yeu_cau)]);
         }
 
         $query->andFilterWhere([
             'id' => $this->id,
             //'thoi_gian_yeu_cau' => $this->thoi_gian_yeu_cau,
             'id_bo_phan_yc' => $this->id_bo_phan_yc,
-            'id_tai_xe' => $this->id_tai_xe,
-            'id_xe' => $this->id_xe,
             'id_nguoi_duyet' => $this->id_nguoi_duyet,
-            'don_gia' => $this->don_gia,
             'create_date' => $this->create_date,
             'create_user' => $this->create_user,
             'nam' => $this->nam,
             'so_phieu' => $this->so_phieu,
-            'ngay_giao_hang' => $this->ngay_giao_hang,
+            'ngay_nghiem_thu' => $this->ngay_nghiem_thu,
         ]);
 
         $query->andFilterWhere(['like', 'ly_do', $this->ly_do])
             ->andFilterWhere(['like', 'nguoi_ky', $this->nguoi_ky])
             ->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
-            ->andFilterWhere(['like', 'ghi_chu_giao_hang', $this->ghi_chu_giao_hang]);
+            ->andFilterWhere(['like', 'ghi_chu_nghiem_thu', $this->ghi_chu_nghiem_thu]);
 
         return $dataProvider;
     }
@@ -136,15 +131,12 @@ class KeHoachXuatKhoSearch extends KeHoachXuatKho
             //'id_cong_trinh' => $this->id_cong_trinh,
             //'thoi_gian_yeu_cau' => $this->thoi_gian_yeu_cau,
             'id_bo_phan_yc' => $this->id_bo_phan_yc,
-            'id_tai_xe' => $this->id_tai_xe,
-            'id_xe' => $this->id_xe,
             'id_nguoi_duyet' => $this->id_nguoi_duyet,
-            'don_gia' => $this->don_gia,
             'create_date' => $this->create_date,
             'create_user' => $this->create_user,
             'nam' => $this->nam,
             'so_phieu' => $this->so_phieu,
-            'ngay_giao_hang' => $this->ngay_giao_hang,
+            'ngay_nghiem_thu' => $this->ngay_nghiem_thu,
             'trang_thai'=>'CHO_DUYET'//chi lay trang thai cho duyet
         ]);
         
@@ -161,7 +153,7 @@ class KeHoachXuatKhoSearch extends KeHoachXuatKho
         $query->andFilterWhere(['like', 'ly_do', $this->ly_do])
         ->andFilterWhere(['like', 'nguoi_ky', $this->nguoi_ky])
         //->andFilterWhere(['like', 'trang_thai', $this->trang_thai])
-        ->andFilterWhere(['like', 'ghi_chu_giao_hang', $this->ghi_chu_giao_hang]);
+        ->andFilterWhere(['like', 'ghi_chu_nghiem_thu', $this->ghi_chu_nghiem_thu]);
         
         return $dataProvider;
     }

@@ -6,6 +6,9 @@ use yii\helpers\Html;
     <div class="col-md-12" style="width: 100%"> 
     	<table id="table-top" style="width: 100%">
     		<tr>
+    			<td width="110px">
+    				<img src="/images/logo.png" width="100px" />
+    			</td>
     			<td>
     				<span style="font-weight: bold; font-size:14pt">DNTN SX-TM NGUYỄN TRÌNH</span>
     				<br/>
@@ -16,13 +19,17 @@ use yii\helpers\Html;
     				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:10pt">0903.794.533 - 0903.794.534 - 0903.794.535</span> 				
     			</td>
     			<td>
-    				<span class="phieu-h1">PHIẾU XUẤT KHO</span>
-    				<br/>
-    				<?= $model->ngayYeuCauLong ?>
+    				<span class="span-status"><?= $model->getDmTrangThaiLabel($model->trang_thai) ?></span> 
     			</td>
-    			<td>
-    				Số: <?= $model->soPhieu ?>
-    			</td>
+    		</tr>
+    	</table>
+    	
+    	<table style="width: 100%">
+    		<tr>
+    			<td style="text-align: center"><span class="phieu-h1">KẾ HOẠCH XUẤT KHO</span></td>
+    		</tr>
+    		<tr>
+    			<td style="text-align: center"><span class="phieu-h2">(<?= $model->soPhieu ?>)</span></td>
     		</tr>
     	</table>
     	
@@ -37,20 +44,22 @@ use yii\helpers\Html;
     		</tr>
     		<tr>
     			<td colspan="2">
-    				- Bộ phận: <?= $model->boPhanYc != null ? $model->boPhanYc->room_name : '' ?>	
+    				- Bộ phận lập Kế hoạch: <?= $model->boPhanYc != null ? $model->boPhanYc->room_name : '' ?>	
     			</td>
     		</tr>
     		<tr>
     			<td colspan="2">
-    				- Lý do xuất kho: <?= $model->ly_do ?>
+    				- Người nhập Kế hoạch: <?= $model->nguoiTao != null ? $model->nguoiTao->name : '' ?>	
     			</td>
     		</tr>
     		<tr>
-    			<td>
-    				- Xuất tại kho:		
+    			<td colspan="2">
+    				- Lý do lập Kế hoạch: <?= $model->ly_do ?>
     			</td>
-    			<td>
-    				Địa điểm:
+    		</tr>
+    		<tr>
+    			<td colspan="2">
+    				- Người duyệt: <?= ($model->nguoiDuyet != null ? $model->nguoiDuyet->name : '') ?>
     			</td>
     		</tr>
     	</table>
@@ -68,7 +77,7 @@ use yii\helpers\Html;
     			</tr>
     			<tr>        			
         			<td>Yêu cầu</td>
-        			<td>Thực xuất</td>
+        			<td>Được duyệt</td>
     			</tr>
     			<!-- <tr>
         			<td style="width:5%">Số TT</td>
@@ -126,38 +135,13 @@ use yii\helpers\Html;
     		</tbody>
     	</table>
     	
-    	<table id="table-info" style="width: 100%; margin-top:10px;">
+    	<table id="table-ky-ten" style="width: 100%; margin-top:10px;">
     		<tr>
-    			<td colspan="2">
-    				- Tổng số tiền (Viết bằng chữ):...		
-    			</td>
-    		</tr>
-    		<tr>
-    			<td>
-    				- Số chứng từ gốc kèm theo:	...	
-    			</td>
-    			<td style="text-align:right">
-    				Ngày ... tháng ... năm ...
-    			</td>
+    			<td style="text-align:right;font-weight:normal;font-style:italic">Trà Vinh, ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></td>
     		</tr>
     	</table>
     	
-    	<table id="table-ky-ten" style="width: 100%; margin-top:10px;">
-    		<tr>
-    			<td>Người lập phiếu</td>
-    			<td>Người nhận hàng</td>
-    			<td>Thủ kho</td>
-    			<td>Kế toán trưởng</td>
-    			<td>Giám đốc</td>
-    		</tr>
-    		<tr>
-    			<td>(Ký, Họ tên)</td>
-    			<td>(Ký, Họ tên)</td>
-    			<td>(Ký, Họ tên)</td>
-    			<td>(Ký, Họ tên)</td>
-    			<td>(Ký, Họ tên)</td>
-    		</tr>
-    	</table>
+    	
     	
     	
     	

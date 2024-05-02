@@ -3,9 +3,9 @@ use yii\helpers\Url;
 use app\widgets\TrangThaiPhieuXuatKhoWidget;
 use kartik\grid\GridView;
 use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
-use app\modules\vanchuyen\taixe\models\TaiXe;
-use app\modules\vanchuyen\xe\models\Xe;
 use yii\helpers\Html;
+use app\modules\nguoidung\models\PhongBan;
+use app\modules\congtrinh\models\CongTrinhQuyen;
 
 return [
     [
@@ -49,6 +49,23 @@ return [
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Phiếu xuất kho',
+        'format'=>'raw',
+        'value'=>function($model){
+        return Html::a($model->soLuongPhieuXuatKho . ' phiếu', ['/xuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
+            'role'=>'modal-remote1',
+            'data-pjax'=>0,
+            'title'=>Yii::t('app', 'Xem phiếu xuất kho'),
+            'data-toggle'=>'tooltip',
+            'class'=>'btn btn-primary btn-xs'
+        ]);
+        },
+        'width' => '150px',
+        'contentOptions'=>['style'=>'text-align:center']
+        ],
         // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
@@ -83,6 +100,13 @@ return [
         'value'=>function($model){
             return $model->tenBoPhanYeuCau;
         },
+        'filterType' => GridView::FILTER_SELECT2,
+        'filter' => PhongBan::getDanhSachPhongBan(),
+        'filterWidgetOptions' => [
+            'pluginOptions' => ['allowClear' => true],
+        ],
+        'filterInputOptions' => ['placeholder' => '-Tất cả-'],
+        //'contentOptions'=>['style'=>'text-align:center']
     ],
     
     [
@@ -91,39 +115,18 @@ return [
         'value'=>function($model){
             return $model->nguoiTao!=null ? $model->nguoiTao->name :'';
         },
-        ],
-    /* [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'ly_do',
-    ], */
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_tai_xe',
-        'value'=>function($model){
-            return $model->taiXe!=null ? $model->taiXe->ho_ten : '';
-        },
         'filterType' => GridView::FILTER_SELECT2,
-        'filter' => (new TaiXe())->getList(),
+        'filter' => $model->getDsNguoiTao(),
         'filterWidgetOptions' => [
             'pluginOptions' => ['allowClear' => true],
         ],
         'filterInputOptions' => ['placeholder' => '-Tất cả-'],
     ],
-    [
+    /* [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'id_xe',
-        'value'=>function($model){
-            return $model->xe != null ? $model->xe->bien_so_xe : '';
-        },
-        'filterType' => GridView::FILTER_SELECT2,
-        'filter' => (new Xe())->getList(),
-        'filterWidgetOptions' => [
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ],
-        'filterInputOptions' => ['placeholder' => '-Tất cả-'],
-    ],
+        'attribute'=>'ly_do',
+    ], */
+
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'',

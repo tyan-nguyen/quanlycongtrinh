@@ -92,6 +92,8 @@ class CongTrinhQuyenBase extends CongTrinhPhanQuyen
      * 
      * */
     public function thucHienXoa(){
-        
+        //kiem tra xem co ke hoach hoac phieu nao thi chinh ngung phu trach
+        $this->ngung_phu_trach = 1;
+        $this->save();
     }
 }

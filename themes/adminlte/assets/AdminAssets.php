@@ -37,7 +37,8 @@ class AdminAssets extends AssetBundle
         'css/customadmin.css',
         'css/custom.css?v=1',
         'js/fancybox-master/dist/jquery.fancybox.min.css',
-        'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css',
+        //'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css',
+        'js/toast/toastify.min.css',
     ];
     public $js = [
         /*  'AdminLTE-2.4.12/bower_components/jquery/dist/jquery.min.js',*/
@@ -64,7 +65,8 @@ class AdminAssets extends AssetBundle
         'js/ajaxcrud.js',
         'js/ModalRemote.js?v=1',
         'js/fancybox-master/dist/jquery.fancybox.min.js',
-        'https://cdn.jsdelivr.net/npm/toastify-js',
+        //'https://cdn.jsdelivr.net/npm/toastify-js',
+        'js/toast/toastify-js.js',
         'js/print-this/printThis.js',
         'js/script.js'
     ];

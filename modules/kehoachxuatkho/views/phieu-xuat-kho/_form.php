@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\modules\vanchuyen\taixe\models\TaiXe;
-use app\modules\vanchuyen\xe\models\Xe;
 use app\widgets\TrangThaiPhieuXuatKhoWidget;
 
 /* @var $this yii\web\View */
@@ -37,10 +35,10 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 </div>
 <div class="row">
 	<div class="col-sm-3">
-		<h4>Thông tin gửi</h4>
-		Bộ phận yêu cầu: <?= $model->boPhanYc!=null?$model->boPhanYc->room_name:'' ?> <br/>
-		Người gửi: <?= $model->nguoiGui!=null?$model->nguoiGui->name:'' ?> <br/>
-		Ý kiến người gửi: <?= $model->y_kien_nguoi_gui ?>
+		<h4>Thông tin tạo</h4>
+		Bộ phận lập Kế hoạch: <?= $model->boPhanYc!=null?$model->boPhanYc->room_name:'' ?> <br/>
+		Người trình duyệt: <?= $model->nguoiGui!=null?$model->nguoiGui->name:'' ?> <br/>
+		Ý kiến người lập: <?= $model->y_kien_nguoi_gui ?>
 	</div>
 	<div class="col-sm-3">
 		<h4>Thông tin duyệt</h4>
@@ -52,8 +50,8 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<h4>Thông tin giao hàng</h4>
 		Tài xế: <?= $model->nguoiDuyet!=null?$model->nguoiDuyet->name:'' ?> <br/>
 		Xe:	<?= $model->ngayDuyet ?> <br/>
-		Ngày giao hàng: <?= $model->ngayGiaoHang ?> <br/>
-        Ghi chú giao hàng: <?= $model->ghi_chu_giao_hang ?>
+		Ngày giao hàng: <?= $model->ngayNghiemThu ?> <br/>
+        Ghi chú giao hàng: <?= $model->ghi_chu_nghiem_thu ?>
 	</div>-->
 	
 	<?php if($model->congTrinh->quyenDuyet){ ?>
@@ -78,35 +76,19 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<?php if($model->trang_thai == 'CHO_DUYET' && $model->congTrinh->quyenDuyet ){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt phiếu xuất kho</a>
 		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt phiếu xuất kho</a>
-		<?php } else { ?>
+		<?php } else if($model->trang_thai == 'CHO_DUYET' && !$model->congTrinh->quyenDuyet) { ?>
 		Chờ Bộ phận Duyệt yêu cầu và xử lý đặt và giao hàng.
 		<?php } ?>
 		<?php if($model->trang_thai == 'DA_DUYET'){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-giao-hang?idPhieu=<?= $model->id ?>" title="Nhập giao hàng" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Nghiệm thu Kế hoạch</a>
 		<?php } ?>
+		<?php if($model->trang_thai == 'DA_HOAN_THANH'){ ?>
+		Kế hoạch đã được nghiệm thu hoàn thành.
+		<?php } ?>
 		
 	</div> 
 </div>
 
-<?php /* ?>
-<div class="row">
-
-	<!-- Thông tin vận chuyển -->
-	<div class="col-sm-3">
-		<?= $form->field($model, 'id_tai_xe')->dropDownList( (new TaiXe())->getList(), ['prompt'=>'-Chọn-'] ) ?>
-	</div>
-	<div class="col-sm-3">
-		<?= $form->field($model, 'id_xe')->dropDownList( (new Xe())->getList(), ['prompt'=>'-Chọn-'] ) ?>	
-	</div>
-	<div class="col-sm-4">
-	 	<?= $form->field($model, 'ghi_chu_giao_hang')->textarea(['rows'=>1]) ?>
-	</div>
-	<div class="col-sm-2">
-		<?= $form->field($model, 'ngay_giao_hang')->textInput(['type' => 'date', 'placeholder'=>'DD/MM/YYYY']) ?>
-	</div>
-
-</div>
-<?php */ ?>
 <?php ActiveForm::end(); ?>
 
 
@@ -135,6 +117,7 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
                     					<th style="width:10%">Đơn giá(VND)</th>
                     					<th style="width:10%">Thành tiền(VND)</th>
                     					<?php if($model->daDuyet==true){ ?><th style="width:10%">TT Duyệt (VND)</th> <?php } ?>
+                    					<?php if($model->daDuyetThiCong==true){ ?><th style="width:10%">Thi công</th> <?php }?>
                     					<!-- <th style="width:10%">Ghi chú</th>-->
                     					<th style="width:15%"></th>
                     				</tr>
@@ -151,13 +134,20 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
                         				<td>{{ result.thanhTien!=null?result.thanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}</td>
                         				<?php if($model->daDuyet==true){ ?><td>{{ result.thanhTienDuocDuyet!=null?result.thanhTienDuocDuyet.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0 }}</td>  <?php } ?>  
                         				<!-- <td>{{ result.ghiChu }}</td> -->
+                        				
+                        				
+                        				<?php if($model->daDuyetThiCong==true){ ?>
                         				<td>
-											
+                        				<span class="lbtn-remove btn btn-primary btn-xs">{{ result.hanMuc + ' (' + result.hanMucPhanTram + '%)'}}</span>
+                        				</td>
+                        				<?php } ?>
+									
+									<td>
                         				<?php if($model->trang_thai=='BAN_NHAP'){ ?>
                         					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult)"><i class="fa fa-edit"></i> Sửa</span>
                         					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="deleteVT(result.id)"><i class="fa fa-trash"></i> Xóa</span>
                         					<?php } ?>                        					
-                        					<span class="lbtn-remove btn btn-primary btn-xs">{{ result.hanMuc + ' (' + result.hanMucPhanTram + '%)'}}</span>
+                        					
                         				</td>
                         			</tr>
                         		</tbody>
@@ -192,51 +182,11 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
     </div>
 </div><!-- end #obj -->
 
-<?php /* ?>
-
-    <?php $form = ActiveForm::begin(); ?>
-
-	<div class="row">
-		<div class="col-md-6"> <?= $form->field($model, 'id_cong_trinh')->textInput() ?></div>
-		<div class="col-md-6"><?= $form->field($model, 'id_bo_phan_yc')->textInput() ?></div>
-	</div>
-	
-	<div class="row">
-		<div class="col-md-6"> <?= $form->field($model, 'ly_do')->textInput() ?></div>
-		<div class="col-md-6"></div>
-	</div>
-	
-    <?= $form->field($model, 'thoi_gian_yeu_cau')->textInput() ?>
-
-    <?= $form->field($model, 'id_tai_xe')->textInput() ?>
-
-    <?= $form->field($model, 'id_xe')->textInput() ?>
-
-    <?= $form->field($model, 'nguoi_ky')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'id_nguoi_duyet')->textInput() ?>
-
-    <?= $form->field($model, 'don_gia')->textInput() ?>
-
-    <?= $form->field($model, 'trang_thai')->textInput(['maxlength' => true]) ?>
-
-	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	        
-	        <?= Html::button(Yii::t('app', 'Save'),['class'=>'btn btn-primary','type'=>"submit"]) ?>
-	    </div>
-	<?php  } ?>
-
-    <?php ActiveForm::end(); ?>
-    
-<?php */ ?>
-
 
 <?php if($model->trang_thai=='BAN_NHAP'){ ?>
 <a href="#" onClick="AddVatTu()" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Thêm vật tư</a>
 <?php } ?>
-<a href="#" onClick="InPhieuXuatKho()" class="btn btn-default"><i class="fa fa-print"></i> In phiếu xuất kho</a>
+<a href="#" onClick="InPhieuXuatKho()" class="btn btn-default"><i class="fa fa-print"></i> In Kế hoạch</a>
     
 </section><!-- section -->
 
@@ -500,7 +450,7 @@ function InPhieuXuatKho(){
             console.log(data);            
             if(data.status == 'success'){
             	$('#print').html(data.content);
-            	printPhieu();//call from script.js
+            	printKeHoach();//call from script.js
             } else {
             	alert('Vật tư không còn tồn tại trên hệ thống!');
             }

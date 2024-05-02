@@ -10,12 +10,13 @@ use app\modules\nguoidung\models\PhongBan;
 use app\modules\nguoidung\models\NguoiDung;
 use app\custom\CustomFunc;
 use app\modules\congtrinh\models\CongTrinh;
+use app\modules\xuatkho\models\PhieuXuatKho;
 
 class KeHoachXuatKho extends KeHoachXuatKhoBase
 {
     /** -------xu ly cho so ke hoach */
     public function getDaDuyet(){
-        if($this->trang_thai=='DA_DUYET'||$this->trang_thai=='KHONG_DUYET'||$this->trang_thai=='DA_GIAO_HANG')
+        if($this->trang_thai=='DA_DUYET'||$this->trang_thai=='KHONG_DUYET'||$this->trang_thai=='DA_HOAN_THANH')
             return true;
         else 
             return false;
@@ -67,6 +68,17 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
         }
     }
     /** //-------end xu ly cho so phieu */
+    //ke hoach thi cong
+    public function getDaDuyetThiCong(){
+        if($this->trang_thai=='DA_DUYET'||$this->trang_thai=='DA_HOAN_THANH')
+            return true;
+            else
+                return false;
+    }
+    //dem so luong phieu xuat kho thuoc ke hoach
+    public function getSoLuongPhieuXuatKho(){
+        return count($this->phieuXuatKhos);
+    }
     
     public function getVatTuXuat(){
         return $this->hasMany(VatTuKeHoach::class, ['id_phieu_xuat_kho' => 'id']);
@@ -148,40 +160,21 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
             return '';
     }
     
-    public function getNgayGiaoHang(){
-        if($this->ngay_giao_hang != null){
+    public function getNgayNghiemThu(){
+        if($this->ngay_nghiem_thu != null){
             $custom = new CustomFunc();
-            return $custom->convertYMDToDMY($this->ngay_giao_hang);
+            return $custom->convertYMDToDMY($this->ngay_nghiem_thu);
         } else
             return '';
     }
     
-    public function getNgayNhapGiaoHang(){
-        if($this->thoi_gian_nhap_giao_hang != null){
+    public function getNgayNhapNghiemThu(){
+        if($this->thoi_gian_nhap_nghiem_thu != null){
             $custom = new CustomFunc();
-            return $custom->convertYMDToDMY($this->thoi_gian_nhap_giao_hang);
+            return $custom->convertYMDToDMY($this->thoi_gian_nhap_nghiem_thu);
         } else
             return '';
-    }
-    
-    /**
-     * Gets query for [[TaiXe]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTaiXe(){
-        return $this->hasOne(TaiXe::class, ['id' => 'id_tai_xe']);
-    }    
-    
-    /**
-     * Gets query for [[Xe]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getXe()
-    {
-        return $this->hasOne(Xe::class, ['id' => 'id_xe']);
-    }
+    }  
     
     /**
      * Gets query for [[BoPhanYc]].
@@ -236,6 +229,15 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
     public function getCongTrinh()
     {
         return $this->hasOne(CongTrinh::class, ['id' => 'id_cong_trinh']);
+    }
+    /**
+     * Gets query for [[PhieuXuatKho]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhieuXuatKhos()
+    {
+        return $this->hasMany(PhieuXuatKho::class, ['id_ke_hoach' => 'id']);
     }
   
 }

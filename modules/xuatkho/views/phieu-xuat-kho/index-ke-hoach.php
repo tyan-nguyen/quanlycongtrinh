@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách phiếu xuất kho theo kế hoạch '. $model->soPhieu,
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách phiếu xuất kho theo kế hoạch '. Html::a('#' . $model->soPhieu , ['/kehoachxuatkho/phieu-xuat-kho/update', 'id'=>$model->id], ['role'=>'modal-remote','title'=> 'Kế hoạch ' . $model->soPhieu, 'style'=>'text-decoration:underline']),
                 //'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                     'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; ' . Yii::t('app', 'Delete All'),

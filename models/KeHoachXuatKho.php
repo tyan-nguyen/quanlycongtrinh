@@ -14,16 +14,13 @@ use Yii;
  * @property int $id_cong_trinh
  * @property int|null $id_bo_phan_yc
  * @property string|null $ly_do
- * @property int|null $id_tai_xe
- * @property int|null $id_xe
- * @property string|null $ngay_giao_hang
- * @property string|null $ghi_chu_giao_hang
- * @property int|null $id_nguoi_nhap_giao_hang
- * @property string|null $thoi_gian_nhap_giao_hang
+ * @property string|null $ngay_nghiem_thu
+ * @property string|null $ghi_chu_nghiem_thu
+ * @property int|null $id_nguoi_nghiem_thu
+ * @property string|null $thoi_gian_nhap_nghiem_thu
  * @property string|null $nguoi_ky
  * @property int|null $id_nguoi_gui
  * @property int|null $id_nguoi_duyet
- * @property float|null $don_gia
  * @property string|null $trang_thai
  * @property string|null $y_kien_nguoi_gui
  * @property string|null $y_kien_nguoi_duyet
@@ -32,6 +29,11 @@ use Yii;
  * @property int|null $xuat_khong_qui_trinh
  * @property string|null $create_date
  * @property int|null $create_user
+ *
+ * @property CongTrinh $congTrinh
+ * @property KeHoachPhanQuyen[] $keHoachPhanQuyens
+ * @property PhieuXuatKho[] $phieuXuatKhos
+ * @property VatTuKeHoach[] $vatTuKeHoaches
  */
 class KeHoachXuatKho extends \yii\db\ActiveRecord
 {
@@ -49,12 +51,12 @@ class KeHoachXuatKho extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_tai_xe', 'id_xe', 'id_nguoi_nhap_giao_hang', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
-            [['thoi_gian_yeu_cau', 'ngay_giao_hang', 'thoi_gian_nhap_giao_hang', 'thoi_gian_duyet', 'create_date'], 'safe'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
+            [['thoi_gian_yeu_cau', 'ngay_nghiem_thu', 'thoi_gian_nhap_nghiem_thu', 'thoi_gian_duyet', 'create_date'], 'safe'],
             [['id_cong_trinh'], 'required'],
-            [['ly_do', 'ghi_chu_giao_hang', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
-            [['don_gia'], 'number'],
+            [['ly_do', 'ghi_chu_nghiem_thu', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
             [['trang_thai'], 'string', 'max' => 20],
+            [['id_cong_trinh'], 'exist', 'skipOnError' => true, 'targetClass' => CongTrinh::class, 'targetAttribute' => ['id_cong_trinh' => 'id']],
         ];
     }
 
@@ -71,16 +73,13 @@ class KeHoachXuatKho extends \yii\db\ActiveRecord
             'id_cong_trinh' => 'Id Cong Trinh',
             'id_bo_phan_yc' => 'Id Bo Phan Yc',
             'ly_do' => 'Ly Do',
-            'id_tai_xe' => 'Id Tai Xe',
-            'id_xe' => 'Id Xe',
-            'ngay_giao_hang' => 'Ngay Giao Hang',
-            'ghi_chu_giao_hang' => 'Ghi Chu Giao Hang',
-            'id_nguoi_nhap_giao_hang' => 'Id Nguoi Nhap Giao Hang',
-            'thoi_gian_nhap_giao_hang' => 'Thoi Gian Nhap Giao Hang',
+            'ngay_nghiem_thu' => 'Ngay Nghiem Thu',
+            'ghi_chu_nghiem_thu' => 'Ghi Chu Nghiem Thu',
+            'id_nguoi_nghiem_thu' => 'Id Nguoi Nghiem Thu',
+            'thoi_gian_nhap_nghiem_thu' => 'Thoi Gian Nhap Nghiem Thu',
             'nguoi_ky' => 'Nguoi Ky',
             'id_nguoi_gui' => 'Id Nguoi Gui',
             'id_nguoi_duyet' => 'Id Nguoi Duyet',
-            'don_gia' => 'Don Gia',
             'trang_thai' => 'Trang Thai',
             'y_kien_nguoi_gui' => 'Y Kien Nguoi Gui',
             'y_kien_nguoi_duyet' => 'Y Kien Nguoi Duyet',
@@ -90,5 +89,45 @@ class KeHoachXuatKho extends \yii\db\ActiveRecord
             'create_date' => 'Create Date',
             'create_user' => 'Create User',
         ];
+    }
+
+    /**
+     * Gets query for [[CongTrinh]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCongTrinh()
+    {
+        return $this->hasOne(CongTrinh::class, ['id' => 'id_cong_trinh']);
+    }
+
+    /**
+     * Gets query for [[KeHoachPhanQuyens]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKeHoachPhanQuyens()
+    {
+        return $this->hasMany(KeHoachPhanQuyen::class, ['id_ke_hoach' => 'id']);
+    }
+
+    /**
+     * Gets query for [[PhieuXuatKhos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhieuXuatKhos()
+    {
+        return $this->hasMany(PhieuXuatKho::class, ['id_ke_hoach' => 'id']);
+    }
+
+    /**
+     * Gets query for [[VatTuKeHoaches]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVatTuKeHoaches()
+    {
+        return $this->hasMany(VatTuKeHoach::class, ['id_phieu_xuat_kho' => 'id']);
     }
 }

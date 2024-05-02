@@ -305,8 +305,8 @@ class CongTrinhController extends Controller
                         ])->all();
                         foreach ($ctQuyens as $indexCtQuyen=>$ctQuyen){
                             if($model->quyen[$indexQuyen] == null || !in_array($ctQuyen->id_nguoi_dung, $model->quyen[$indexQuyen])){
-                                //$ctQuyen->thucHienXoa(); //chinh sua lai cho logic
-                                $ctQuyen->delete();//tam thoi lay cai nay
+                                $ctQuyen->thucHienXoa(); //chinh sua lai cho logic
+                               // $ctQuyen->delete();//tam thoi lay cai nay
                             }
                         }//end foreach $ctQuyens
                     }//end foreach $dmQuyens
@@ -327,7 +327,11 @@ class CongTrinhController extends Controller
                                     $newQ->quyen = $indexQ;
                                     $newQ->save();
                                 }else{
-                                    
+                                    //neu da ngung phu trach thi cho phu trach lai
+                                    if($checkQ->ngung_phu_trach == 1){
+                                        $checkQ->ngung_phu_trach = 0;
+                                        $checkQ->save();
+                                    }
                                 }
                             }//end foreach $valQ
                         }//end if
@@ -338,7 +342,8 @@ class CongTrinhController extends Controller
                         'id_cong_trinh'=>$id
                     ])->all();
                     foreach ($ctQuyens as $indexCtQuyen=>$ctQuyen){
-                        $ctQuyen->delete();
+                        $ctQuyen->thucHienXoa();
+                       // $ctQuyen->delete();
                     }//end foreach $ctQuyens
                 }
                 return [

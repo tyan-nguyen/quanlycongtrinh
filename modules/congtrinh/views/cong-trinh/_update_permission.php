@@ -18,7 +18,8 @@ use app\modules\nguoidung\models\NguoiDung;
         foreach ($dmQuyens as $indexQuyen=>$dmQuyen){
             $ctQuyens = CongTrinhQuyen::find()->where([
                 'id_cong_trinh'=>$model->id,
-                'quyen' => $indexQuyen
+                'quyen' => $indexQuyen,
+                'ngung_phu_trach'=>0
             ])->all();
             foreach ($ctQuyens as $indexCtQuyen=>$ctQuyen){
                 $model->quyen[$indexQuyen][] = $ctQuyen->id_nguoi_dung;
