@@ -65,12 +65,10 @@ class VatTuKeHoach extends VatTuKeHoachBase
         } else {
             return $sum . '/' . $slBocTach;
         } */
-        $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_cong_trinh'=>$this->phieuXuatKho->id_cong_trinh])
-        ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->all();
+        $soLuongXuat = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_ke_hoach'=>$this->id_phieu_xuat_kho])
+        ->andFilterWhere(['IN','p.trang_thai',KeHoachXuatKho::getDmTrangThaiDuocDuyet()])->sum('t.so_luong_duoc_duyet');
         
-        
-        
-        return 0;
+        return ($soLuongXuat != null) ? $soLuongXuat : 0;
     }
     
     /**
@@ -101,7 +99,11 @@ class VatTuKeHoach extends VatTuKeHoachBase
         } else {
             return 0;
         } */
-        return 0;
+        if($this->so_luong_duoc_duyet > 0){
+            return round($this->hanMuc/$this->so_luong_duoc_duyet*100, 2);
+        } else{
+            return 0;
+        }
     }
     
     /**

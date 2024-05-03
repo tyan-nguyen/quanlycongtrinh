@@ -213,6 +213,21 @@ class PhieuXuatKhoController extends Controller
     }
     
     /**
+     * danh sách phiếu duyệt
+     * @return mixed
+     */
+    public function actionPhieuNghiemThu()
+    {
+        $searchModel = new KeHoachXuatKhoSearch();
+        $dataProvider = $searchModel->searchPhieuNghiemThu(Yii::$app->request->queryParams);
+        
+        return $this->render('index-phieu-nghiem-thu', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
      * Lists all PhieuXuatKho models.
      * @return mixed
      */

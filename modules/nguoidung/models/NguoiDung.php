@@ -8,6 +8,7 @@ use webvimark\modules\UserManagement\models\User;
 use yii\helpers\ArrayHelper;
 use app\modules\congtrinh\models\CongTrinhQuyen;
 use app\modules\xuatkho\models\PhieuXuatKho;
+use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
 
 class NguoiDung extends User
 {
@@ -27,8 +28,22 @@ class NguoiDung extends User
     public static function getSoPhieuXuatKhoCanDuyet(){
         $soPhieu = PhieuXuatKho::find()
             ->where(['trang_thai'=>'CHO_DUYET'])
-            ->andFilterWhere(['IN','id_cong_trinh',NguoiDung::getTatCaCongTrinhDuyet()])->count();
+            ->andFilterWhere(['IN','id_cong_trinh', NguoiDung::getTatCaCongTrinhDuyet()])->count();
         return $soPhieu;
+    }
+    
+    public static function getSoKeHoachXuatKhoDaDuyet(){
+        $soKH = KeHoachXuatKho::find()
+        ->where(['trang_thai'=>'DA_DUYET'])
+        ->andFilterWhere(['IN','id_cong_trinh', NguoiDung::getTatCaCongTrinhDuyet()])->count();
+        return $soKH;
+    }
+    
+    public static function getSoKeHoachXuatKhoCanDuyet(){
+        $soKH = KeHoachXuatKho::find()
+            ->where(['trang_thai'=>'DA_DUYET'])
+            ->andFilterWhere(['IN','id_cong_trinh', NguoiDung::getTatCaCongTrinhDuyet()])->count();
+        return $soKH;
     }
     
     /* public static function getTatCaCongTrinhDuyet(){

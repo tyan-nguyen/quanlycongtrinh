@@ -40,12 +40,12 @@ AdminAssets::register($this);
 	              <span class="hidden-xs"><?= isset(Yii::$app->user->identity->username) ? Yii::$app->user->identity->username : '' ?></span>
 	            </a>
             </li>
-            <li class="dropdown user user-menu">
+           <!--  <li class="dropdown user user-menu">
             	<a href="/site/set-lang?target=vi" class="btn btn-primary py-1 px-1 ms-1"><i class="fa fa-star"></i> vi &nbsp;</a>
             </li>
             <li class="dropdown user user-menu">
             	<a href="/site/set-lang?target=en" class="btn btn-primary py-1 px-1 ms-1"> <i class="fa fa-globe"></i> en &nbsp;</a>
-            </li>
+            </li> -->
 		</ul>
       </div>
 

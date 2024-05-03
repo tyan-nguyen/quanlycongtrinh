@@ -77,7 +77,7 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt phiếu xuất kho</a>
 		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt phiếu xuất kho</a>
 		<?php } else if($model->trang_thai == 'CHO_DUYET' && !$model->congTrinh->quyenDuyet) { ?>
-		Chờ Bộ phận Duyệt yêu cầu và xử lý đặt và giao hàng.
+		Chờ Bộ phận Duyệt xác nhận duyệt Kế hoạch.
 		<?php } ?>
 		<?php if($model->trang_thai == 'DA_DUYET'){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-giao-hang?idPhieu=<?= $model->id ?>" title="Nhập giao hàng" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Nghiệm thu Kế hoạch</a>

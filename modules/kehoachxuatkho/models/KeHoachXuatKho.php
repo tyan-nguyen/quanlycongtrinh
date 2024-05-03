@@ -100,6 +100,16 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
         return $sum;
     }
     
+    public function getHanMucThiCong(){
+        $sum = 0;
+        foreach ($this->vatTuKeHoachs as $i=>$phieu){
+            $sum += $phieu->hanMucPhanTram;
+        }
+        if(count($this->vatTuKeHoachs) > 0)
+            return round($sum/count($this->vatTuKeHoachs), 2);
+       // else return 0;
+    }
+    
     public function dsVatTuYeuCau(){
         $result = array();
         foreach ($this->vatTuXuat as $iVt=>$vatTu){
@@ -238,6 +248,15 @@ class KeHoachXuatKho extends KeHoachXuatKhoBase
     public function getPhieuXuatKhos()
     {
         return $this->hasMany(PhieuXuatKho::class, ['id_ke_hoach' => 'id']);
+    }
+    /**
+     * Gets query for [[VatTuKeHoaches]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVatTuKeHoachs()
+    {
+        return $this->hasMany(VatTuKeHoach::class, ['id_phieu_xuat_kho' => 'id']);//id_phieu_xuat_kho thuoc bang vat_tu_ke_hoach
     }
   
 }
