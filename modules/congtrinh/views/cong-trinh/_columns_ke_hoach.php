@@ -55,13 +55,13 @@ return [
         'label'=>'Phiếu xuất kho',
         'format'=>'raw',
         'value'=>function($model){
-            return Html::a($model->soLuongPhieuXuatKho . ' phiếu', ['/xuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
+        return ($model->trang_thai == 'DA_DUYET' || $model->trang_thai == 'DA_HOAN_THANH') ? Html::a($model->soLuongPhieuXuatKho . ' phiếu', ['/xuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
                 'role'=>'modal-remote1',
                 'data-pjax'=>0,
                 'title'=>Yii::t('app', 'Xem phiếu xuất kho'),
                 'data-toggle'=>'tooltip',
                 'class'=>'btn btn-primary btn-xs'
-            ]);
+            ]) : '';
         },
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']

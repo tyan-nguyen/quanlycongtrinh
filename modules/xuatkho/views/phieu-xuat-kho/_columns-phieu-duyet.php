@@ -52,7 +52,7 @@ return [
         'value'=>function($model){
         return Html::a($model->soPhieu, ['/xuatkho/phieu-xuat-kho/update', 'id'=>$model->id], [
             'role'=>'modal-remote',
-            'title'=>Yii::t('app', 'Update'),
+            'title'=>Yii::t('app', 'Duyệt phiếu xuất kho'),
             'data-toggle'=>'tooltip',
             'class'=>'btn btn-primary btn-xs'
         ]);
@@ -60,6 +60,22 @@ return [
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']
     ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Thuộc Kế hoạch',
+        'format'=>'raw',
+        'value'=>function($model){
+        return Html::a($model->keHoach->soPhieu, ['/kehoachxuatkho/phieu-xuat-kho/update', 'id'=>$model->id_ke_hoach], [
+            'role'=>'modal-remote',
+            'title'=>Yii::t('app', 'Xem Kế hoạch'),
+            'data-toggle'=>'tooltip',
+            'class'=>'btn btn-primary btn-xs'
+        ]);
+        },
+        'width' => '150px',
+        'contentOptions'=>['style'=>'text-align:center']
+        ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_yeu_cau',

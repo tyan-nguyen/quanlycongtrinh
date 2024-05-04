@@ -22,23 +22,7 @@ use app\modules\nguoidung\models\NguoiDung;
     
     </div>
     
-    <?php 
-        $soPhieuDuyet = NguoiDung::getSoPhieuXuatKhoCanDuyet();
-    ?>
-    <div class="col-md-3">
-    	<div class="small-box bg-green">
-            <div class="inner">
-                <h3><?= $soPhieuDuyet ?></h3>
-                <p>PHIẾU XUẤT KHO CHỜ DUYỆT</p>
-            </div>
-            <div class="icon">
-            	<i class="glyphicon glyphicon-file"></i>
-            </div>
-            <a href="/xuatkho/phieu-xuat-kho/phieu-duyet" class="small-box-footer">
-            	Vào duyệt <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
+    
     
      <?php 
         /*$soKeHoachDaDuyet = NguoiDung::getSoKeHoachXuatKhoDaDuyet();
@@ -73,6 +57,24 @@ use app\modules\nguoidung\models\NguoiDung;
             	<i class="glyphicon glyphicon-file"></i>
             </div>
             <a href="/kehoachxuatkho/phieu-xuat-kho/phieu-nghiem-thu" class="small-box-footer">
+            	Vào duyệt <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <?php 
+        $soPhieuDuyet = NguoiDung::getSoPhieuXuatKhoCanDuyet();
+    ?>
+    <div class="col-md-3">
+    	<div class="small-box bg-green">
+            <div class="inner">
+                <h3><?= $soPhieuDuyet ?></h3>
+                <p>PHIẾU XUẤT KHO CHỜ DUYỆT</p>
+            </div>
+            <div class="icon">
+            	<i class="glyphicon glyphicon-file"></i>
+            </div>
+            <a href="/xuatkho/phieu-xuat-kho/phieu-duyet" class="small-box-footer">
             	Vào duyệt <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>

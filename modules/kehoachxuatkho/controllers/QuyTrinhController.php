@@ -61,7 +61,19 @@ class QuyTrinhController extends Controller
                     ];
                 }
                 if($model->validate()){
-                    $model->trang_thai = 'CHO_DUYET';
+                    if($model->tao_khong_qui_trinh == 0){
+                        $model->trang_thai = 'CHO_DUYET';
+                    } else {
+                        $model->trang_thai = 'DA_DUYET';
+                        $model->thoi_gian_duyet = date('Y-m-d H:i:s');
+                        $model->id_nguoi_duyet = Yii::$app->user->id;
+                        $model->y_kien_nguoi_duyet = 'Duyệt tự động không qua qui trình';
+                        $modelVatTu = VatTuKeHoach::find()->where(['id_phieu_xuat_kho'=>$model->id])->all();
+                        foreach ($modelVatTu as $indexVT=>$vatTu){
+                            $vatTu->so_luong_duoc_duyet = $vatTu->so_luong_yeu_cau;
+                            $vatTu->save();
+                        }
+                    }
                     $model->thoi_gian_yeu_cau = date('Y-m-d H:i:s');
                     $model->id_nguoi_gui = Yii::$app->user->id;
                     $model->save();

@@ -71,11 +71,11 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<br/>
 		<?php if($model->trang_thai!='DA_GIAO_HANG' && $model->trang_thai!='KHONG_DUYET'){ ?>Tiếp theo: <br/> <?php } ?>
 		<?php if($model->trang_thai == 'BAN_NHAP'){ ?>
-		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Gửi phiếu xuất kho</a>
+		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Gửi Kế hoạch</a>
 		<?php } ?>
 		<?php if($model->trang_thai == 'CHO_DUYET' && $model->congTrinh->quyenDuyet ){ ?>
-		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt phiếu xuất kho</a>
-		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt phiếu xuất kho</a>
+		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt Kế hoạch</a>
+		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt Kế hoạch</a>
 		<?php } else if($model->trang_thai == 'CHO_DUYET' && !$model->congTrinh->quyenDuyet) { ?>
 		Chờ Bộ phận Duyệt xác nhận duyệt Kế hoạch.
 		<?php } ?>
