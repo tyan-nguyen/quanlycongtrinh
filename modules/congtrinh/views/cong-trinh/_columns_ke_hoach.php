@@ -122,6 +122,17 @@ return [
         },
         'contentOptions'=>['style'=>'font-weight:bold']
      ],
+     
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'',
+         'label'=>'Thi công',
+         'value'=>function($model){
+            return $model->hanMucThiCong . '%';
+         },
+         'contentOptions'=>['style'=>'font-weight:bold']
+     ],
+         
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_ky',

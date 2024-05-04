@@ -18,7 +18,18 @@ return [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'id',
     // ],
-    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'Trạng thái Kế hoạch',
+        'format'=>'raw',
+        'value'=>function($model){
+            if($model->hanMucThiCong >= 90){
+                return '<small class="label label-warning">Đủ điều kiện nghiệm thu</small>';    
+            } else {
+                return '<small class="label label-default">Chưa đủ điều kiện nghiệm thu</small>';
+            }
+        }
+    ],
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'id_cong_trinh',
@@ -60,6 +71,25 @@ return [
         'width' => '150px',
         'contentOptions'=>['style'=>'text-align:center']
     ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Phiếu xuất kho',
+        'format'=>'raw',
+        'value'=>function($model){
+        return Html::a($model->soLuongPhieuXuatKho . ' phiếu', ['/xuatkho/phieu-xuat-kho/phieu-xuat-ke-hoach', 'id'=>$model->id], [
+            'role'=>'modal-remote1',
+            'data-pjax'=>0,
+            'title'=>Yii::t('app', 'Xem phiếu xuất kho'),
+            'data-toggle'=>'tooltip',
+            'class'=>'btn btn-primary btn-xs'
+        ]);
+        },
+        'width' => '150px',
+        'contentOptions'=>['style'=>'text-align:center']
+    ],
+        
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'thoi_gian_yeu_cau',
@@ -105,6 +135,16 @@ return [
         },
         'contentOptions'=>['style'=>'font-weight:bold']
     ],
+    
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'',
+        'label'=>'Thi công',
+        'value'=>function($model){
+            return $model->hanMucThiCong . '%';
+        },
+        'contentOptions'=>['style'=>'font-weight:bold']
+     ],
         
     // [
         // 'class'=>'\kartik\grid\DataColumn',

@@ -39,11 +39,17 @@ class NguoiDung extends User
         return $soKH;
     }
     
-    public static function getSoKeHoachXuatKhoCanDuyet(){
+    public static function getSoKeHoachXuatKhoCanNghiemThu(){
         $soKH = KeHoachXuatKho::find()
             ->where(['trang_thai'=>'DA_DUYET'])
-            ->andFilterWhere(['IN','id_cong_trinh', NguoiDung::getTatCaCongTrinhDuyet()])->count();
-        return $soKH;
+            ->andFilterWhere(['IN','id_cong_trinh', NguoiDung::getTatCaCongTrinhDuyet()])->all();
+       $sum = 0;
+       foreach ($soKH as $i=>$kh){
+           if($kh->hanMucThiCong >= 90){
+               $sum++;
+           }
+       }
+       return $sum;
     }
     
     /* public static function getTatCaCongTrinhDuyet(){

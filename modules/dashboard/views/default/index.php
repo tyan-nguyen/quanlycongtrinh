@@ -41,7 +41,7 @@ use app\modules\nguoidung\models\NguoiDung;
     </div>
     
      <?php 
-        $soKeHoachDaDuyet = NguoiDung::getSoKeHoachXuatKhoDaDuyet();
+        /*$soKeHoachDaDuyet = NguoiDung::getSoKeHoachXuatKhoDaDuyet();
      ?>
     <div class="col-md-3">
     	<div class="small-box bg-green">
@@ -57,15 +57,17 @@ use app\modules\nguoidung\models\NguoiDung;
             </a>
         </div>
     </div>
+    <?php */ ?>
     
     <?php 
-        $soKeHoachDuyet = NguoiDung::getSoKeHoachXuatKhoCanDuyet();
+        $soKeHoachDuyet = NguoiDung::getSoKeHoachXuatKhoDaDuyet();
+        $soKeHoachCanNghiemThu = NguoiDung::getSoKeHoachXuatKhoCanNghiemThu();
     ?>
     <div class="col-md-3">
     	<div class="small-box bg-green">
             <div class="inner">
-                <h3><?= $soKeHoachDuyet ?></h3>
-                <p>KẾ HOẠCH SẮP HOÀN THÀNH</p>
+                <h3><?= $soKeHoachCanNghiemThu ?>/<?= $soKeHoachDuyet ?></h3>
+                <p>KẾ HOẠCH ĐỦ ĐIỀU KIỆN NGHIỆM THU</p>
             </div>
             <div class="icon">
             	<i class="glyphicon glyphicon-file"></i>

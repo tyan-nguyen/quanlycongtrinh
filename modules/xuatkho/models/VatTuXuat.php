@@ -5,6 +5,7 @@ namespace app\modules\xuatkho\models;
 use Yii;
 use app\modules\xuatkho\models\base\VatTuXuatBase;
 use app\modules\vattu\models\VatTu;
+use app\modules\kehoachxuatkho\models\VatTuKeHoach;
 
 class VatTuXuat extends VatTuXuatBase
 {
@@ -39,10 +40,63 @@ class VatTuXuat extends VatTuXuatBase
         ];
 
     }
+    
     /**
-     * han muc
+     * han muc theo ke hoach
      */
     public function getHanMuc(){
+        $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_ke_hoach'=>$this->phieuXuatKho->id_ke_hoach])
+        ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->sum('so_luong_duoc_duyet');
+        
+       $slBocTachModel =  VatTuKeHoach::find()->where(['id_vat_tu'=>$this->id_vat_tu, 'id_phieu_xuat_kho'=>$this->phieuXuatKho->id_ke_hoach])->one();
+        $slBocTach = 0;
+        if($slBocTachModel !=null){
+            $slBocTach = $slBocTachModel->so_luong_duoc_duyet;
+        }
+        
+       /*  $sum=0;
+        foreach ($models as $i=>$model){
+            if($model->so_luong_duoc_duyet != null){
+                $sum += $model->so_luong_duoc_duyet;
+            }
+        } */
+        $sum = $models!=null ? $models : 0;
+        if($this->phieuXuatKho->trang_thai == 'BAN_NHAP'){
+            return ($sum + $this->so_luong_yeu_cau) . '/' . $slBocTach;
+        } else {
+            return $sum . '/' . $slBocTach;
+        }
+    }
+    
+    /**
+     * han muc theo ke hoach
+     */
+    public function getHanMucPhanTram(){
+        $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_ke_hoach'=>$this->phieuXuatKho->id_ke_hoach])
+        ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->sum('so_luong_duoc_duyet');
+        
+        $slBocTachModel =  VatTuKeHoach::find()->where(['id_vat_tu'=>$this->id_vat_tu, 'id_phieu_xuat_kho'=>$this->phieuXuatKho->id_ke_hoach])->one();
+        $slBocTach = 0;
+        if($slBocTachModel !=null){
+            $slBocTach = $slBocTachModel->so_luong_duoc_duyet;
+        }
+        
+        $sum = $models!=null ? $models : 0;
+        if($slBocTach > 0){
+            if($this->phieuXuatKho->trang_thai == 'BAN_NHAP'){
+                return round(($sum + $this->so_luong_yeu_cau)/$slBocTach,2)*100;
+            } else {
+                return round($sum/$slBocTach*100,2);
+            }
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * han muc theo cong trinh <tam chua xai>
+     */
+    public function getHanMucTheoCT(){
         $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_cong_trinh'=>$this->phieuXuatKho->id_cong_trinh])
             ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->all();
         
@@ -66,9 +120,9 @@ class VatTuXuat extends VatTuXuatBase
     }
     
     /**
-     * han muc
+     * han muc theo cong trinh <tam chua xai>
      */
-    public function getHanMucPhanTram(){
+    public function getHanMucPhanTramTheoCT(){
         $models = VatTuXuat::find()->alias('t')->joinWith(['phieuXuatKho as p'])->where(['t.id_vat_tu'=>$this->id_vat_tu, 'p.id_cong_trinh'=>$this->phieuXuatKho->id_cong_trinh])
         ->andFilterWhere(['IN','p.trang_thai',PhieuXuatKho::getDmTrangThaiDuocDuyet()])->all();
         

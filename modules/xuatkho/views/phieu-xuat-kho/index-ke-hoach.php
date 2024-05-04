@@ -60,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => require(__DIR__.'/_columns_ke_hoach.php'),
             'toolbar'=> [
                 ['content'=>
-                    Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create-ke-hoach', 'idkh'=>$model->id],
-                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Create new') . ' Phieu Xuat Khos','class'=>'btn btn-default']).
+                    (($model->congTrinh->quyenTao && $model->trang_thai != 'DA_HOAN_THANH') ? Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create-ke-hoach', 'idkh'=>$model->id],
+                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Create new') . ' Phieu Xuat Khos','class'=>'btn btn-default']) : '' ).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i> ' . Yii::t('app', 'Reset Grid'), ['', 'id'=>$model->id],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>Yii::t('app', 'Reset Grid')])
                 ],

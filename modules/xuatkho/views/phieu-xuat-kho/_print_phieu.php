@@ -22,6 +22,8 @@ use yii\helpers\Html;
     			</td>
     			<td>
     				Số: <?= $model->soPhieu ?>
+    				<br/><br/>
+    				<span class="span-status"><?= $model->getDmTrangThaiLabel($model->trang_thai) ?></span> 
     			</td>
     		</tr>
     	</table>
