@@ -27,6 +27,7 @@ use Yii;
  * @property string|null $thoi_gian_duyet
  * @property int|null $tao_khong_qui_trinh
  * @property int|null $xuat_khong_qui_trinh
+ * @property int|null $edit_mode
  * @property string|null $create_date
  * @property int|null $create_user
  *
@@ -51,7 +52,7 @@ class KeHoachXuatKho extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'edit_mode', 'create_user'], 'integer'],
             [['thoi_gian_yeu_cau', 'ngay_nghiem_thu', 'thoi_gian_nhap_nghiem_thu', 'thoi_gian_duyet', 'create_date'], 'safe'],
             [['id_cong_trinh'], 'required'],
             [['ly_do', 'ghi_chu_nghiem_thu', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
@@ -86,6 +87,7 @@ class KeHoachXuatKho extends \yii\db\ActiveRecord
             'thoi_gian_duyet' => 'Thoi Gian Duyet',
             'tao_khong_qui_trinh' => 'Tao Khong Qui Trinh',
             'xuat_khong_qui_trinh' => 'Xuat Khong Qui Trinh',
+            'edit_mode' => 'Edit Mode',
             'create_date' => 'Create Date',
             'create_user' => 'Create User',
         ];

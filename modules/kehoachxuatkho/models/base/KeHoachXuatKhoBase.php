@@ -27,6 +27,7 @@ use app\models\User;
  * @property string|null $thoi_gian_duyet
  * @property int|null $tao_khong_qui_trinh
  * @property int|null $xuat_khong_qui_trinh
+ * @property int|null $edit_mode
  * @property string|null $create_date
  * @property int|null $create_user
  *
@@ -39,6 +40,8 @@ use app\models\User;
  */
 class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
 {
+    const MODEL_ID = 'kehoachxuatkho';
+    
     public $kiemTraVatTuDaDuyet;
     /**
      * Danh muc trang thai phieu xuat kho
@@ -108,7 +111,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             [['y_kien_nguoi_duyet'], 'required', 'on'=>'duyet-phieu'], //on gui yeu cau
             [['ghi_chu_nghiem_thu', 'ngay_nghiem_thu'], 'required', 'on'=>'duyet-giao-hang'], //on gui yeu cau
             [['thoi_gian_yeu_cau', 'create_date', 'ngay_nghiem_thu', 'thoi_gian_duyet', 'thoi_gian_nhap_nghiem_thu', 'kiemTraVatTuDaDuyet'], 'safe'],
-            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'create_user'], 'integer'],
+            [['so_phieu', 'nam', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_nghiem_thu', 'id_nguoi_gui', 'id_nguoi_duyet', 'tao_khong_qui_trinh', 'xuat_khong_qui_trinh', 'edit_mode', 'create_user'], 'integer'],
             [['ly_do', 'ghi_chu_nghiem_thu', 'nguoi_ky', 'y_kien_nguoi_gui', 'y_kien_nguoi_duyet'], 'string'],
             [['trang_thai'], 'string', 'max' => 20],
             [['id_cong_trinh'], 'exist', 'skipOnError' => true, 'targetClass' => CongTrinh::class, 'targetAttribute' => ['id_cong_trinh' => 'id']],
@@ -146,6 +149,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
             'trang_thai' => 'Trạng thái',
             'tao_khong_qui_trinh' => 'Thêm mới không qua qui trình',
             'xuat_khong_qui_trinh' => 'Xuất vật tư không qua qui trình',
+            'edit_mode' => 'Cho phép chỉnh sửa kế hoạch khi đã duyệt',
             'create_date' => 'Ngày tạo',
             'create_user' => 'Người tạo',
             
@@ -165,6 +169,8 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
                 $this->xuat_khong_qui_trinh  = 0;
             if($this->tao_khong_qui_trinh == NULL)
                 $this->tao_khong_qui_trinh  = 0;
+            if($this->edit_mode == NULL)
+                $this->edit_mode  = 0;
         }
         return parent::beforeSave($insert);
     }

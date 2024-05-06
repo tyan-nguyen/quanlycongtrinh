@@ -58,7 +58,8 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 	 <div class="col-sm-3">
 		<h4>Cấu hình</h4>
 		<?= $form->field($model, 'tao_khong_qui_trinh')->checkbox(['disabled'=>true, 'class'=>'minimal-red']) ?>
-		<?= $form->field($model, 'xuat_khong_qui_trinh')->checkbox(['class'=>'minimal-red']) ?>		
+		<?= $form->field($model, 'xuat_khong_qui_trinh')->checkbox(['class'=>'minimal-red']) ?>
+		<?= $model->congTrinh->quyenQuanLy ? $form->field($model, 'edit_mode')->checkbox(['class'=>'minimal-red']):'' ?>		
 	</div>
 	<?php } ?>
 	

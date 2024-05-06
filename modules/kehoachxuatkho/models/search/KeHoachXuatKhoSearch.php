@@ -19,7 +19,7 @@ class KeHoachXuatKhoSearch extends KeHoachXuatKho
     public function rules()
     {
         return [
-            [['id', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_duyet', 'create_user', 'so_phieu', 'nam'], 'integer'],
+            [['id', 'id_cong_trinh', 'id_bo_phan_yc', 'id_nguoi_duyet', 'create_user', 'so_phieu', 'nam', 'edit_mode'], 'integer'],
             [['thoi_gian_yeu_cau', 'ly_do', 'nguoi_ky', 'trang_thai', 'create_date', 'ghi_chu_nghiem_thu', 'ngay_nghiem_thu'], 'safe'],
         ];
     }
