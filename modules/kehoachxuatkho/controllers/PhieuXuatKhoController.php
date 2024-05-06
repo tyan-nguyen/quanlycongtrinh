@@ -14,6 +14,8 @@ use app\modules\vattu\models\LoaiVatTu;
 use app\modules\vattu\models\VatTu;
 use app\modules\congtrinh\models\CongTrinh;
 use app\modules\kehoachxuatkho\models\search\KeHoachXuatKhoSearch;
+use app\modules\chung\models\History;
+use app\modules\nguoidung\models\NguoiDung;
 
 /**
  * Default controller for the `xuatkho` module
@@ -89,20 +91,48 @@ class PhieuXuatKhoController extends Controller
                 //update
                 $model= VatTuKeHoach::findOne($_POST['id']);
                 $model->trang_thai = 'MOI';
-                if(isset($_POST['slyc']))
+                $contentHistory = '';
+                if(isset($_POST['slyc'])){
+                    if($phieu->trang_thai != 'BAN_NHAP' && $phieu->edit_mode == 1 && $model->so_luong_yeu_cau != $_POST['slyc']){
+                        $contentHistory .= 'Thay đổi Số lượng yêu cầu từ ' . $model->so_luong_yeu_cau . ' -> ' . $_POST['slyc'];
+                    }
                     $model->so_luong_yeu_cau = $_POST['slyc'];
+                }
                // $model->id_vat_tu = $_POST['idVatTu'];
                 if(isset($_POST['sldd'])){
+                    if($phieu->trang_thai != 'BAN_NHAP' && $phieu->edit_mode == 1 && $model->so_luong_duoc_duyet != $_POST['sldd']){
+                        if($contentHistory != '')
+                            $contentHistory .= '<br/>';
+                        $contentHistory .= 'Thay đổi Số lượng được duyệt từ ' . $model->so_luong_duoc_duyet . ' -> ' . $_POST['sldd'];
+                    }
                     $model->so_luong_duoc_duyet = $_POST['sldd'];
                     $model->trang_thai = 'DA_DUYET';
                 }
-                if(isset($_POST['donGia']))
+                if(isset($_POST['donGia'])){
+                    if($phieu->trang_thai != 'BAN_NHAP' && $phieu->edit_mode == 1 && $model->don_gia != $_POST['donGia']){
+                        if($contentHistory != '')
+                            $contentHistory .= '<br/>';
+                        $contentHistory .= 'Thay đổi Đơn giá từ ' . $model->don_gia . ' -> ' . $_POST['donGia'];
+                    }
                     $model->don_gia = $_POST['donGia'];
-                if(isset($_POST['ghiChu']))
+                }
+                if(isset($_POST['ghiChu'])){
+                    if($phieu->trang_thai != 'BAN_NHAP' && $phieu->edit_mode == 1 && $model->ghi_chu != $_POST['ghiChu']){
+                        if($contentHistory != '')
+                            $contentHistory .= '<br/>';
+                        $contentHistory .= 'Thay đổi Ghi chú từ ' . $model->ghi_chu . ' -> ' . $_POST['ghiChu'];
+                    }
                     $model->ghi_chu =$_POST['ghiChu'];
+                }
                
                 if($model->save()){
                     $phieu->refresh();
+                    
+                    if($contentHistory != ''){
+                        $contentHistory = $model->vatTu->ten_vat_tu . ': ' . $contentHistory;
+                        History::addManualHistory(KeHoachXuatKho::MODEL_ID, $phieu->id, $contentHistory);
+                    }
+                    
                     return [
                         'type'=>'update',
                         'status'=>'success',
@@ -346,6 +376,7 @@ class PhieuXuatKhoController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);
+        $oldModel = $this->findModel($id);
             
         if($request->isAjax){
             /*
@@ -362,6 +393,14 @@ class PhieuXuatKhoController extends Controller
                                 Html::button(Yii::t('app', 'Lưu lại'),['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
+                if($oldModel->trang_thai != 'BAN_NHAP' && $oldModel->edit_mode != $model->edit_mode){
+                    if($model->edit_mode == 1){
+                        History::addManualHistory(KeHoachXuatKho::MODEL_ID, $model->id, Yii::$app->user->username . ' đã bật chế độ cho phép chỉnh sửa Kế hoạch đã duyệt.');
+                    } else if($model->edit_mode == 0){
+                        History::addManualHistory(KeHoachXuatKho::MODEL_ID, $model->id, Yii::$app->user->username . ' đã tắt chế độ cho phép chỉnh sửa Kế hoạch đã duyệt.');
+                    }
+                }
+                
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
                     'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',

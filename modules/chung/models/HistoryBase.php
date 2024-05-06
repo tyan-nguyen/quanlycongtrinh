@@ -86,7 +86,7 @@ class HistoryBase extends \app\models\History
      * - $content:noi dung cua so luong vat tu thay doi/don gia thay doi
      */
     public static function addManualHistory($type, $idAttribute, $content){
-        if($noiDung != null){
+        if($content != null){
             $his = new History();
             $his->loai = $type;
             $his->id_tham_chieu = $idAttribute;

@@ -145,6 +145,22 @@ return [
          },
          'contentOptions'=>['style'=>'font-weight:bold']
      ],
+     [
+         'class'=>'\kartik\grid\DataColumn',
+         'attribute'=>'',
+         'label'=>'',         
+         'format'=>'raw',
+         'value'=>function($model){
+         return Html::a('<span class="glyphicon glyphicon-time"></span>', ['/chung/history/view-group', 'loai'=>KeHoachXuatKho::MODEL_ID, 'idThamChieu'=>$model->id ], [
+             'role'=>'modal-remote',
+             'title'=>Yii::t('app', 'Xemn lịch sử thay đổi'),
+             'data-toggle'=>'tooltip',
+             'class'=>'btn'
+         ]);
+         },
+         'width' => '30px',
+         'contentOptions'=>['style'=>'text-align:center']
+     ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'nguoi_ky',

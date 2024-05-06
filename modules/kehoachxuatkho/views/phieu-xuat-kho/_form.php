@@ -145,8 +145,12 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 									
 									<td>
                         				<?php if($model->trang_thai=='BAN_NHAP'){ ?>
-                        					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult)"><i class="fa fa-edit"></i> Sửa</span>
+                        					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult, 0)"><i class="fa fa-edit"></i> Sửa</span>
                         					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="deleteVT(result.id)"><i class="fa fa-trash"></i> Xóa</span>
+                        					<?php } ?> 
+                        					
+                        			<?php if($model->trang_thai!='BAN_NHAP' && $model->edit_mode==1){ ?>
+                        					<span class="lbtn-remove btn btn-default btn-xs" v-on:click="editVT(indexResult, 1)"><i class="fa fa-edit"></i> Sửa</span>
                         					<?php } ?>                        					
                         					
                         				</td>
@@ -211,11 +215,11 @@ var vue10 = new Vue({
 		results: <?= json_encode($model->dsVatTuYeuCau()) ?>
 	},
 	methods: {
-		editVT: function (indexResult) {
+		editVT: function (indexResult, editMode) {
           //alert('edit' + indexResult);
           //alert(this.results[indexResult]['id']);
           //alert(this.results[indexResult]['slyc']);
-          editVatTu(this.results.dsVatTu[indexResult]);
+          editVatTu(this.results.dsVatTu[indexResult],editMode);
         },
         deleteVT: function (id) {
             var result = confirm("Xác nhận xóa vật tư đề nghị khỏi phiếu yêu cầu?");
@@ -310,7 +314,7 @@ function AddVatTu(){
     }
 }
 
-function editVatTu(arr){
+function editVatTu(arr,editMode){
 	if ($("#idTrUpdate").length > 0){
 		alert('Bạn đang chỉnh sửa vật tư yêu cầu, vui lòng lưu dữ liệu hoặc hủy bỏ để tránh mất dữ liệu!');
 	} else {
@@ -321,7 +325,9 @@ function editVatTu(arr){
     	formRow += '<td>'+ arr['tenVatTu'] +'</td>';
     	//formRow += '<td><select id="idVatTuEdit" name="idVatTu"></select></td>';
     	formRow += '<td>'+ arr['dvt'] +'</td>';
-    	formRow += '<td><input type="text" name="slyc" value="' + arr['slyc'] + '" id="slycEdit" required /></td>';    	
+    	formRow += '<td><input type="text" name="slyc" value="' + arr['slyc'] + '" id="slycEdit" required /></td>';    		if(editMode==1){
+    		formRow += '<td><input type="text" name="sldd" value="' + arr['sldd'] + '" id="slddEdit" required /></td>';
+    	}
     	formRow += '<td><input type="text" name="donGia" value="' + arr['donGia'] + '" id="donGiaEdit" required /></td>';
     	formRow += '<td><span id="thanhTienEdit">'+ arr['thanhTien'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +' </span></td>';
     	//formRow += '<td><input type="text" name="ghiChu" value="' + arr['ghiChu'] + '" /></td>';
@@ -340,14 +346,24 @@ function editVatTu(arr){
           placeholder: 'Select an option',
            width: '100%'
         }); */
+        if(editMode==1){
+            $("#slycEdit").on("input", function() {
+               $('#thanhTienEdit').text(($(this).val()*$('#donGiaEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+           $("#donGiaEdit").on("input", function() {
+               //alert($(this).val()); 
+               $('#thanhTienEdit').text(($(this).val()*$('#slycEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    });
+            });
+        }else{
+        	$("#slddEdit").on("input", function() {
+               $('#thanhTienEdit').text(($(this).val()*$('#donGiaEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+            });
+            $("#donGiaEdit").on("input", function() {
+               //alert($(this).val()); 
+               $('#thanhTienEdit').text(($(this).val()*$('#slddEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    });
+        }
         
-        $("#slycEdit").on("input", function() {
-           $('#thanhTienEdit').text(($(this).val()*$('#donGiaEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
-        $("#donGiaEdit").on("input", function() {
-           //alert($(this).val()); 
-           $('#thanhTienEdit').text(($(this).val()*$('#slycEdit').val()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-        });
 	}
 }
 

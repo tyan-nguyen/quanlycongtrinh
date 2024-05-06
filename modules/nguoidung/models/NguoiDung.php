@@ -12,6 +12,9 @@ use app\modules\kehoachxuatkho\models\KeHoachXuatKho;
 
 class NguoiDung extends User
 {
+    /**single user**/
+
+    /**chung**/
     public static function getDanhSachNguoiDung(){
         $list = User::find()->all();
         return ArrayHelper::map($list, 'id', 'username', 'phongBan.room_name');
