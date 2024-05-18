@@ -26,7 +26,7 @@ use yii\helpers\Html;
     	
     	<table style="width: 100%">
     		<tr>
-    			<td style="text-align: center"><span class="phieu-h1">KẾ HOẠCH XUẤT KHO</span></td>
+    			<td style="text-align: center"><span class="phieu-h1">ĐỀ NGHỊ XUẤT KHO</span></td>
     		</tr>
     		<tr>
     			<td style="text-align: center"><span class="phieu-h2">(<?= $model->soPhieu ?>)</span></td>
