@@ -62,6 +62,7 @@ class QuyTrinhController extends Controller
                     if($model->keHoach->xuat_khong_qui_trinh == 0){
                         $model->trang_thai = 'CHO_DUYET';
                     } else {
+                        $model->so_phieu = $model->getSoPhieuCuoi($model->nam) + 1;
                         $model->trang_thai = 'DA_DUYET';
                         $model->thoi_gian_duyet = date('Y-m-d H:i:s');
                         $model->id_nguoi_duyet = Yii::$app->user->id;
@@ -150,6 +151,7 @@ class QuyTrinhController extends Controller
                     }
                 }
                 if($model->validate()){
+                    $model->so_phieu = $model->getSoPhieuCuoi($model->nam) + 1;
                     $model->trang_thai = 'DA_DUYET';
                     $model->thoi_gian_duyet = date('Y-m-d H:i:s');
                     $model->id_nguoi_duyet = Yii::$app->user->id;

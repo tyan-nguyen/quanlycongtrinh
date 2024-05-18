@@ -68,6 +68,7 @@ class QuyTrinhController extends Controller
                         $model->thoi_gian_duyet = date('Y-m-d H:i:s');
                         $model->id_nguoi_duyet = Yii::$app->user->id;
                         $model->y_kien_nguoi_duyet = 'Duyệt tự động không qua qui trình';
+                        $model->so_phieu = $model->getSoPhieuCuoi($model->nam) + 1;
                         $modelVatTu = VatTuKeHoach::find()->where(['id_phieu_xuat_kho'=>$model->id])->all();
                         foreach ($modelVatTu as $indexVT=>$vatTu){
                             $vatTu->so_luong_duoc_duyet = $vatTu->so_luong_yeu_cau;
@@ -157,6 +158,7 @@ class QuyTrinhController extends Controller
                     $model->trang_thai = 'DA_DUYET';
                     $model->thoi_gian_duyet = date('Y-m-d H:i:s');
                     $model->id_nguoi_duyet = Yii::$app->user->id;
+                    $model->so_phieu = $model->getSoPhieuCuoi($model->nam) + 1;
                     $model->save();
                     return [
                         'forceReload'=>'#crud-datatable-pjax',
