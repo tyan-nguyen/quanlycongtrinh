@@ -385,7 +385,7 @@ class PhieuXuatKhoController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> ĐỀ NGHỊ XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -403,7 +403,7 @@ class PhieuXuatKhoController extends Controller
                 
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> ĐỀ NGHỊ XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -413,7 +413,7 @@ class PhieuXuatKhoController extends Controller
                 ];   
             }else{
                  return [
-                    'title'=> '<i class="fa fa-file-text-o"></i> KẾ HOẠCH XUẤT KHO',
+                    'title'=> '<i class="fa fa-file-text-o"></i> ĐỀ NGHỊ XUẤT KHO',
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),

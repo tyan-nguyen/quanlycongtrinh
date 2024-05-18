@@ -28,7 +28,7 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 <div class="row">
     <div class="col-xs-12">
         <h5 class="page-header">
-            <i class="fa fa-book"></i> Mã Kế hoạch: #<?= $model->soPhieu ?>
+            <i class="fa fa-book"></i> Mã Đề nghị: #<?= $model->soPhieu ?>
             <small class="pull-right">Ngày yêu cầu <?= $model->thoi_gian_yeu_cau==null?'(dự kiến)':'' ?>: <?= $model->ngayYeuCauShort ?></small>
         </h5>
     </div>
@@ -72,13 +72,13 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 		<br/>
 		<?php if($model->trang_thai!='DA_GIAO_HANG' && $model->trang_thai!='KHONG_DUYET'){ ?>Tiếp theo: <br/> <?php } ?>
 		<?php if($model->trang_thai == 'BAN_NHAP'){ ?>
-		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Gửi Kế hoạch</a>
+		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/gui-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Gửi Đề nghị</a>
 		<?php } ?>
 		<?php if($model->trang_thai == 'CHO_DUYET' && $model->congTrinh->quyenDuyet ){ ?>
-		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt Kế hoạch</a>
-		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt Kế hoạch</a>
+		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-phieu?idPhieu=<?= $model->id ?>" title="Trình duyệt" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Duyệt Đề nghị</a>
+		<a class="btn btn-warning btn-xs" href="/kehoachxuatkho/quy-trinh/khong-duyet-phieu?idPhieu=<?= $model->id ?>" title="Không duyệt phiếu" role="modal-remote"><i class="glyphicon glyphicon-remove"></i> Không duyệt Đề nghị</a>
 		<?php } else if($model->trang_thai == 'CHO_DUYET' && !$model->congTrinh->quyenDuyet) { ?>
-		Chờ Bộ phận Duyệt xác nhận duyệt Kế hoạch.
+		Chờ Bộ phận Duyệt xác nhận duyệt Đề nghị xuất vật tư.
 		<?php } ?>
 		<?php if($model->trang_thai == 'DA_DUYET'){ ?>
 		<a class="btn btn-primary btn-xs" href="/kehoachxuatkho/quy-trinh/duyet-giao-hang?idPhieu=<?= $model->id ?>" title="Nhập giao hàng" role="modal-remote"><i class="glyphicon glyphicon-forward"></i> Nghiệm thu Kế hoạch</a>
@@ -191,7 +191,7 @@ use app\widgets\TrangThaiPhieuXuatKhoWidget;
 <?php if($model->trang_thai=='BAN_NHAP'){ ?>
 <a href="#" onClick="AddVatTu()" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Thêm vật tư</a>
 <?php } ?>
-<a href="#" onClick="InPhieuXuatKho()" class="btn btn-default"><i class="fa fa-print"></i> In Kế hoạch</a>
+<a href="#" onClick="InPhieuXuatKho()" class="btn btn-default"><i class="fa fa-print"></i> In Đề nghị</a>
     
 </section><!-- section -->
 

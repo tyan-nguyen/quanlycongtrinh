@@ -51,7 +51,7 @@ use app\modules\nguoidung\models\NguoiDung;
     	<div class="small-box bg-green">
             <div class="inner">
                 <h3><?= $soKeHoachCanNghiemThu ?>/<?= $soKeHoachDuyet ?></h3>
-                <p>KẾ HOẠCH ĐỦ ĐIỀU KIỆN NGHIỆM THU</p>
+                <p>ĐỦ ĐIỀU KIỆN NGHIỆM THU</p>
             </div>
             <div class="icon">
             	<i class="glyphicon glyphicon-file"></i>

@@ -127,7 +127,7 @@ class KeHoachXuatKhoBase extends \app\models\KeHoachXuatKho
     {
         return [
             'id' => 'ID',
-            'so_phieu' => 'Số Kế hoạch',
+            'so_phieu' => 'Số Đề nghị',
             'nam' => 'Năm vào sổ',
             
             'id_cong_trinh' => 'Công trình',

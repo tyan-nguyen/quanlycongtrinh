@@ -10,7 +10,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel app\models\PhieuXuatKhoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kế hoạch xuất kho';
+$this->title = 'Đề nghị xuất kho';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -27,7 +27,7 @@ CrudAsset::register($this);
             'toolbar'=> [
                 ['content'=>
                     Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create'],
-                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Create new') . ' Phieu Xuat Khos','class'=>'btn btn-default']).
+                    ['role'=>'modal-remote','title'=> Yii::t('app', 'Create new') . ' Đề nghị xuất kho','class'=>'btn btn-default']).
                     Html::a('<i class="glyphicon glyphicon-repeat"></i> ' . Yii::t('app', 'Reset Grid'), [''],
                     ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>Yii::t('app', 'Reset Grid')]).
                     '{toggleData}'.
@@ -39,7 +39,7 @@ CrudAsset::register($this);
             'responsive' => true,          
             'panel' => [
                 'type' => 'primary', 
-                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách kế hoạch',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> Danh sách Đề nghị xuất kho',
                 //'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
                             'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; ' . Yii::t('app', 'Delete All'),
