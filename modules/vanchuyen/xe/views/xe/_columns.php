@@ -37,8 +37,12 @@ return [
                 'label' => 'Hình ảnh',
                 'format' => 'html', 
                 'value' => function ($model) {
-                    $imageUrl = Yii::$app->urlManager->createUrl($model->hinh_xe);
-                    return Html::img($imageUrl, ['class' => 'img-thumbnail', 'style' => 'width:100px;height:100px;']);
+                    if($model->hinh_xe != null){
+                        $imageUrl = Yii::getAlias('@web/') . $model->hinh_xe;
+                        return Html::img($imageUrl, ['class' => 'img-thumbnail', 'style' => 'width:100px;height:100px;']);
+                    } else {
+                        return 'Chưa có hình ảnh';
+                    }
                 },
     ],
     
